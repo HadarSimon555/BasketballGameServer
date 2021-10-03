@@ -12,4 +12,9 @@
     <ProjectReference Include="..\BasketballGameServerBL\BasketballGameServerBL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
