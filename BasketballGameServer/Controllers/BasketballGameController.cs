@@ -9,7 +9,7 @@ using System.IO;
 
 namespace BasketballGameServer.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("BasketballGameApi")]
     [ApiController]
     public class BasketballGameController : ControllerBase
     {
@@ -20,5 +20,11 @@ namespace BasketballGameServer.Controllers
             this.context = context;
         }
         #endregion
+
+        [Route("Test")]
+        [HttpGet]
+        public string Hello()
+        { return "hello Hadar"; }
+
     }
 }
