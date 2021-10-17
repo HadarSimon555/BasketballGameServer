@@ -50,10 +50,7 @@ ALTER TABLE
 CREATE TABLE "GameStats"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "gameId" INT NOT NULL,
-    "throw2Pts" INT NOT NULL,
-    "sling2Pts" INT NOT NULL,
-    "throw3Pts" INT NOT NULL,
-    "sling3Pts" INT NOT NULL,
+    "plsyerShots" INT NOT NULL,
     "playerId" INT NOT NULL
 );
 ALTER TABLE
@@ -92,8 +89,8 @@ CREATE TABLE "GameStatus"(
 ALTER TABLE
     "GameStatus" ADD CONSTRAINT "gamestatus_id_primary" PRIMARY KEY("id");
 CREATE TABLE "RequestToJoinTeam"(
-    "id" INT IDENTITY(1,1) NOT NULL,
-    "playerId" INT NOT NULL,
+    "id" INT NOT NULL,
+    "playerId" INT IDENTITY(1,1) NOT NULL,
     "teamId" INT NOT NULL
 );
 ALTER TABLE
@@ -135,6 +132,8 @@ ALTER TABLE
     "Game" ADD CONSTRAINT "game_seasonid_foreign" FOREIGN KEY("seasonId") REFERENCES "Season"("id");
 ALTER TABLE
     "RequestGame" ADD CONSTRAINT "requestgame_gameid_foreign" FOREIGN KEY("gameId") REFERENCES "Game"("id");
+ALTER TABLE
+    "GameStats" ADD CONSTRAINT "gamestats_gameid_foreign" FOREIGN KEY("gameId") REFERENCES "Game"("id");
 ALTER TABLE
     "Team" ADD CONSTRAINT "team_coachid_foreign" FOREIGN KEY("coachId") REFERENCES "Coach"("id");
 ALTER TABLE
