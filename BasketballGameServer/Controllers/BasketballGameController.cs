@@ -37,7 +37,6 @@ namespace BasketballGameServer.Controllers
             try
             {
                 User user = this.context.Login(u.Email, u.Pass);
-                //Check user name and password
                 if (user != null)
                 {
                     UserDTO userDTO = new UserDTO(user);

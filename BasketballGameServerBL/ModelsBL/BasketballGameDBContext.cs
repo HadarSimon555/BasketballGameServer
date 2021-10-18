@@ -11,7 +11,7 @@ namespace BasketballGameServerBL.Models
     public partial class BasketballGameDBContext:DbContext
     {
         // פעולת התחברות, אם ההתחברות לא הצליחה מחזיר null
-        public Player Login(string email, string pass)
+        public User Login(string email, string pass)
         {
             return this.Users.Where(u => u.Email == email && u.Pass == pass).FirstOrDefault();
         }
