@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BasketballGameServerBL.Models;
 using System.IO;
+using BasketballGameServer.DTO;
 
 namespace BasketballGameServer.Controllers
 {
@@ -21,26 +22,28 @@ namespace BasketballGameServer.Controllers
         }
         #endregion
 
+        #region Test
         [Route("Test")]
         [HttpGet]
         public string Hello()
         { return "hello Hadar"; }
+        #endregion
 
         #region Login
         [Route("Login")]
         [HttpPost]
-        public PlayerDTO Login([FromBody] PlayerDTO p)
+        public UserDTO Login([FromBody] UserDTO u)
         {
             try
             {
-                Player pl = this.context.Login(p.PlayerEmail, p.PlayerUserName, p.PlayerPassword);
+                User user = this.context.Login(u.Email, u.Pass);
                 //Check user name and password
-                if (pl != null)
+                if (user != null)
                 {
-                    PlayerDTO pDTO = new PlayerDTO(pl);
-                    HttpContext.Session.SetObject("player", pDTO);
+                    UserDTO userDTO = new UserDTO(user);
+                    HttpContext.Session.SetObject("user", userDTO);
                     Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                    return pDTO;
+                    return userDTO;
                 }
 
                 else

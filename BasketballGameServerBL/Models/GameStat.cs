@@ -9,10 +9,7 @@ namespace BasketballGameServerBL.Models
     {
         public int Id { get; set; }
         public int GameId { get; set; }
-        public int Throw2Pts { get; set; }
-        public int Sling2Pts { get; set; }
-        public int Throw3Pts { get; set; }
-        public int Sling3Pts { get; set; }
+        public int PlsyerShots { get; set; }
         public int PlayerId { get; set; }
 
         public virtual Game Game { get; set; }

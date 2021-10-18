@@ -15,7 +15,9 @@ namespace BasketballGameServerBL.Models
 
         public int Id { get; set; }
         public string Name { get; set; }
+        public int UserId { get; set; }
 
+        public virtual User User { get; set; }
         public virtual ICollection<RequestGame> RequestGames { get; set; }
         public virtual ICollection<Team> Teams { get; set; }
     }
