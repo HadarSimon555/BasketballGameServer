@@ -32,17 +32,17 @@ namespace BasketballGameServer.Controllers
         #region Login
         [Route("Login")]
         [HttpPost]
-        public UserDTO Login([FromBody] UserDTO u)
+        public User Login([FromBody] UserDTO u)
         {
             try
             {
                 User user = this.context.Login(u.Email, u.Pass);
                 if (user != null)
                 {
-                    UserDTO userDTO = new UserDTO(user);
-                    HttpContext.Session.SetObject("user", userDTO);
+                   // UserDTO userDTO = new UserDTO(user);
+                    HttpContext.Session.SetObject("user", user);
                     Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                    return userDTO;
+                    return user;
                 }
 
                 else

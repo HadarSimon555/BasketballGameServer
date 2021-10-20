@@ -37,7 +37,7 @@ namespace BasketballGameServerBL.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=BasketballGameDB;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost\\sqlexpress;Database=BasketballGameDB;Trusted_Connection=True;");
             }
         }
 
@@ -275,13 +275,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("RequestToJoinTeam");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.PlayerId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("playerId");
+                entity.Property(e => e.PlayerId).HasColumnName("playerId");
 
                 entity.Property(e => e.TeamId).HasColumnName("teamId");
 
@@ -355,7 +351,7 @@ namespace BasketballGameServerBL.Models
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.BirthDate)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasColumnName("birthDate");
 
                 entity.Property(e => e.City)
@@ -368,10 +364,12 @@ namespace BasketballGameServerBL.Models
                     .HasMaxLength(255)
                     .HasColumnName("email");
 
-                entity.Property(e => e.Gender).HasColumnName("gender");
+                entity.Property(e => e.Gender)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("gender");
 
                 entity.Property(e => e.Image)
-                    .IsRequired()
                     .HasMaxLength(255)
                     .HasColumnName("image");
 

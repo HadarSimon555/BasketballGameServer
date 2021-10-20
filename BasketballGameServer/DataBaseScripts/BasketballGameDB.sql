@@ -1,3 +1,9 @@
+CREATE DATABASE "BasketballGameDB";
+GO
+
+USE "BasketballGameDB"
+GO
+
 CREATE TABLE "Player"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "height" FLOAT NOT NULL,
@@ -89,8 +95,8 @@ CREATE TABLE "GameStatus"(
 ALTER TABLE
     "GameStatus" ADD CONSTRAINT "gamestatus_id_primary" PRIMARY KEY("id");
 CREATE TABLE "RequestToJoinTeam"(
-    "id" INT NOT NULL,
-    "playerId" INT IDENTITY(1,1) NOT NULL,
+    "id" INT IDENTITY(1,1) NOT NULL,
+    "playerId" INT NOT NULL,
     "teamId" INT NOT NULL
 );
 ALTER TABLE
@@ -99,9 +105,9 @@ CREATE TABLE "User"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "email" NVARCHAR(255) NOT NULL,
     "pass" NVARCHAR(255) NOT NULL,
-    "birthDate" DATE NOT NULL,
-    "image" NVARCHAR(255) NOT NULL,
-    "gender" BIT NOT NULL,
+    "birthDate" DATETIME NOT NULL,
+    "image" NVARCHAR(255) NULL,
+    "gender" NVARCHAR(255) NOT NULL,
     "city" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
