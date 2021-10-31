@@ -16,5 +16,30 @@ namespace BasketballGameServerBL.Models
             return this.Users.Where(u => u.Email == email && u.Pass == pass).FirstOrDefault();
         }
 
+        public void AddPlayer(Player player)
+        {
+            try
+            {
+                this.Players.Add(player);
+                this.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public void AddCoach(Coach coach)
+        {
+            try
+            {
+                this.Coaches.Add(coach);
+                this.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
     }
 }
