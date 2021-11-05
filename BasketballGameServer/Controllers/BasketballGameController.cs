@@ -103,6 +103,50 @@ namespace BasketballGameServer.Controllers
                 return null;
             }
         }
+        #endregion,
+
+        #region UserExistByEmail
+        [Route("UserExistByEmail")]
+        [HttpGet]
+        public bool UserExistByEmail([FromQuery] string email)
+        {
+            bool exist = this.context.UserExistByEmail(email);
+
+            if (exist)
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+
+                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                return true;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+        #endregion
+
+        #region UserExistByPassword
+        [Route("UserExistByPassword")]
+        [HttpGet]
+        public bool UserExistByPassword([FromQuery] string password)
+        {
+            bool exist = this.context.UserExistByPassword(password);
+
+            if (exist)
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+
+                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                return true;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
         #endregion
     }
 }

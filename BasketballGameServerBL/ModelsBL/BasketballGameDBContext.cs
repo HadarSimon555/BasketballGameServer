@@ -48,16 +48,20 @@ namespace BasketballGameServerBL.Models
         }
         #endregion
 
+        #region UserExistByEmail
         // פעולה הבודקת האם האימייל שהתקבל הוא ייחודי או שהוא כבר קיים ברשימת המשתמשים
         public bool UserExistByEmail(string email)
         {
             return Users.Any(u => u.Email == email);
         }
+        #endregion
 
+        #region UserExistByPassword
         // פעולה הבודקת האם הסיסמה שהתקבלה היא ייחודית או שהיא כבר קיים ברשימת המשתמשים
-        public bool UserExistByUserName(string pass)
+        public bool UserExistByPassword(string pass)
         {
             return Users.Any(u => u.Pass == pass);
         }
+        #endregion
     }
 }
