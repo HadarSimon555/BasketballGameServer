@@ -7,7 +7,6 @@ GO
 CREATE TABLE "Player"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "height" FLOAT NOT NULL,
-    "name" NVARCHAR(255) NOT NULL,
     "userId" INT NOT NULL
 );
 ALTER TABLE
@@ -49,14 +48,16 @@ CREATE TABLE "Game"(
     "awayTeamId" INT NOT NULL,
     "gameStatusId" INT NOT NULL,
     "scoreAwayTeam" INT NOT NULL,
-    "scoreHomeTeam" INT NOT NULL
+    "scoreHomeTeam" INT NOT NULL,
+    "date" DATETIME NOT NULL,
+    "time" TIME NOT NULL
 );
 ALTER TABLE
     "Game" ADD CONSTRAINT "game_id_primary" PRIMARY KEY("id");
 CREATE TABLE "GameStats"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "gameId" INT NOT NULL,
-    "plsyerShots" INT NOT NULL,
+    "playerShots" INT NOT NULL,
     "playerId" INT NOT NULL
 );
 ALTER TABLE
@@ -71,7 +72,6 @@ ALTER TABLE
     "RequestGame" ADD CONSTRAINT "requestgame_id_primary" PRIMARY KEY("id");
 CREATE TABLE "Coach"(
     "id" INT IDENTITY(1,1) NOT NULL,
-    "name" NVARCHAR(255) NOT NULL,
     "userId" INT NOT NULL
 );
 ALTER TABLE
@@ -108,7 +108,8 @@ CREATE TABLE "User"(
     "birthDate" DATETIME NOT NULL,
     "image" NVARCHAR(255) NULL,
     "gender" NVARCHAR(255) NOT NULL,
-    "city" NVARCHAR(255) NOT NULL
+    "city" NVARCHAR(255) NOT NULL,
+    "name" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
     "User" ADD CONSTRAINT "user_id_primary" PRIMARY KEY("id");

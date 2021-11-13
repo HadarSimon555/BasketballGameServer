@@ -51,11 +51,6 @@ namespace BasketballGameServerBL.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("name");
-
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
                 entity.HasOne(d => d.User)
@@ -73,6 +68,10 @@ namespace BasketballGameServerBL.Models
 
                 entity.Property(e => e.AwayTeamId).HasColumnName("awayTeamId");
 
+                entity.Property(e => e.Date)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date");
+
                 entity.Property(e => e.GameStatusId).HasColumnName("gameStatusId");
 
                 entity.Property(e => e.HomeTeamId).HasColumnName("homeTeamId");
@@ -82,6 +81,8 @@ namespace BasketballGameServerBL.Models
                 entity.Property(e => e.ScoreHomeTeam).HasColumnName("scoreHomeTeam");
 
                 entity.Property(e => e.SeasonId).HasColumnName("seasonId");
+
+                entity.Property(e => e.Time).HasColumnName("time");
 
                 entity.HasOne(d => d.AwayTeam)
                     .WithMany(p => p.GameAwayTeams)
@@ -116,7 +117,7 @@ namespace BasketballGameServerBL.Models
 
                 entity.Property(e => e.PlayerId).HasColumnName("playerId");
 
-                entity.Property(e => e.PlsyerShots).HasColumnName("plsyerShots");
+                entity.Property(e => e.PlayerShots).HasColumnName("playerShots");
 
                 entity.HasOne(d => d.Game)
                     .WithMany(p => p.GameStats)
@@ -162,11 +163,6 @@ namespace BasketballGameServerBL.Models
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Height).HasColumnName("height");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("name");
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
@@ -372,6 +368,11 @@ namespace BasketballGameServerBL.Models
                 entity.Property(e => e.Image)
                     .HasMaxLength(255)
                     .HasColumnName("image");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
 
                 entity.Property(e => e.Pass)
                     .IsRequired()
