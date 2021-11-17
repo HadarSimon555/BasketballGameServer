@@ -155,3 +155,8 @@ ALTER TABLE
     "Game" ADD CONSTRAINT "game_gamestatusid_foreign" FOREIGN KEY("gameStatusId") REFERENCES "GameStatus"("id");
 ALTER TABLE
     "Player" ADD CONSTRAINT "player_userid_foreign" FOREIGN KEY("userId") REFERENCES "User"("id");
+
+    USE "BasketballGameDB"
+GO
+
+    select * from User
