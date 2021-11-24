@@ -49,7 +49,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("Coach");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
@@ -64,7 +66,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("Game");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.AwayTeamId).HasColumnName("awayTeamId");
 
@@ -111,7 +115,9 @@ namespace BasketballGameServerBL.Models
 
             modelBuilder.Entity<GameStat>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.GameId).HasColumnName("gameId");
 
@@ -136,7 +142,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("GameStatus");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -148,7 +156,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("League");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -160,7 +170,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("Player");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Height).HasColumnName("height");
 
@@ -177,7 +189,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("PlayerOnTeamForSeason");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.PlayerId).HasColumnName("playerId");
 
@@ -216,7 +230,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("Position");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -228,7 +244,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("RequestGame");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.CoachId).HasColumnName("coachId");
 
@@ -259,7 +277,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("RequestStatus");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -271,7 +291,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("RequestToJoinTeam");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.PlayerId).HasColumnName("playerId");
 
@@ -294,7 +316,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("Season");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -306,7 +330,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("Team");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.CoachId).HasColumnName("coachId");
 
@@ -341,10 +367,9 @@ namespace BasketballGameServerBL.Models
                 entity.HasIndex(e => e.Email, "user_email_unique")
                     .IsUnique();
 
-                entity.HasIndex(e => e.Pass, "user_pass_unique")
-                    .IsUnique();
-
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.BirthDate)
                     .HasColumnType("datetime")
