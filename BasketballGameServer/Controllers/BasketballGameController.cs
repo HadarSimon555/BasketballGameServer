@@ -67,12 +67,17 @@ namespace BasketballGameServer.Controllers
             //Check user name and password
             if (player != null)
             {
-                this.context.AddPlayer(player);
+                bool addPlayer = this.context.AddPlayer(player);
 
-                HttpContext.Session.SetObject("theUser", player);
-                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                return player;
+                if (addPlayer)
+                {
+                    HttpContext.Session.SetObject("theUser", player);
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                    return player;
+                }
+                else
+                    return null;
             }
             else
             {
@@ -90,12 +95,17 @@ namespace BasketballGameServer.Controllers
             //Check user name and password
             if (coach != null)
             {
-                this.context.AddCoach(coach);
+                bool addCoach = this.context.AddCoach(coach);
 
-                HttpContext.Session.SetObject("theUser", coach);
-                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                return coach;
+                if (addCoach)
+                {
+                    HttpContext.Session.SetObject("theUser", coach);
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                    return coach;
+                }
+                else
+                    return null;
             }
             else
             {
@@ -111,28 +121,6 @@ namespace BasketballGameServer.Controllers
         public bool UserExistByEmail([FromQuery] string email)
         {
             bool exist = this.context.UserExistByEmail(email);
-
-            if (exist)
-            {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-
-                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                return true;
-            }
-            else
-            {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-                return false;
-            }
-        }
-        #endregion
-
-        #region UserExistByPassword
-        [Route("UserExistByPassword")]
-        [HttpGet]
-        public bool UserExistByPassword([FromQuery] string password)
-        {
-            bool exist = this.context.UserExistByPassword(password);
 
             if (exist)
             {

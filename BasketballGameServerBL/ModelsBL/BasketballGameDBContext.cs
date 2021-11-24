@@ -19,31 +19,35 @@ namespace BasketballGameServerBL.Models
         #endregion
 
         #region AddPlayer
-        public void AddPlayer(Player player)
+        public bool AddPlayer(Player player)
         {
             try
             {
                 this.Players.Add(player);
                 this.SaveChanges();
+                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return false;
             }
         }
         #endregion
 
         #region AddCoach
-        public void AddCoach(Coach coach)
+        public bool AddCoach(Coach coach)
         {
             try
             {
                 this.Coaches.Add(coach);
                 this.SaveChanges();
+                return true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return false;
             }
         }
         #endregion
@@ -53,14 +57,6 @@ namespace BasketballGameServerBL.Models
         public bool UserExistByEmail(string email)
         {
             return Users.Any(u => u.Email == email);
-        }
-        #endregion
-
-        #region UserExistByPassword
-        // פעולה הבודקת האם הסיסמה שהתקבלה היא ייחודית או שהיא כבר קיים ברשימת המשתמשים
-        public bool UserExistByPassword(string pass)
-        {
-            return Users.Any(u => u.Pass == pass);
         }
         #endregion
     }
