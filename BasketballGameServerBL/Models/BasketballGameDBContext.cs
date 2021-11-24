@@ -341,9 +341,6 @@ namespace BasketballGameServerBL.Models
                 entity.HasIndex(e => e.Email, "user_email_unique")
                     .IsUnique();
 
-                entity.HasIndex(e => e.Pass, "user_pass_unique")
-                    .IsUnique();
-
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.BirthDate)
