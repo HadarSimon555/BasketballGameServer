@@ -115,8 +115,6 @@ ALTER TABLE
     "User" ADD CONSTRAINT "user_id_primary" PRIMARY KEY("id");
 CREATE UNIQUE INDEX "user_email_unique" ON
     "User"("email");
-CREATE UNIQUE INDEX "user_pass_unique" ON
-    "User"("pass");
 ALTER TABLE
     "RequestToJoinTeam" ADD CONSTRAINT "requesttojointeam_playerid_foreign" FOREIGN KEY("playerId") REFERENCES "Player"("id");
 ALTER TABLE
@@ -155,8 +153,3 @@ ALTER TABLE
     "Game" ADD CONSTRAINT "game_gamestatusid_foreign" FOREIGN KEY("gameStatusId") REFERENCES "GameStatus"("id");
 ALTER TABLE
     "Player" ADD CONSTRAINT "player_userid_foreign" FOREIGN KEY("userId") REFERENCES "User"("id");
-
-    USE "BasketballGameDB"
-GO
-
-    select * from User
