@@ -171,6 +171,15 @@ namespace BasketballGameServer.Controllers
             return Forbid();
         }
         #endregion
+
+        #region GetGames
+        [Route("GetGames")]
+        [HttpGet]
+        public List<Game> GetGames()
+        {
+            return context.Games.ToList();
+        }
+        #endregion
     }
 }
 
