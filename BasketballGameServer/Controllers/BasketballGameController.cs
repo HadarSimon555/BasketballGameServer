@@ -175,7 +175,7 @@ namespace BasketballGameServer.Controllers
         #region GetGames
         [Route("GetGames")]
         [HttpGet]
-        public List<Game> GetGames()
+        public List<Game> GetGames(string myTeam)
         {
             return context.Games.ToList();
         }
