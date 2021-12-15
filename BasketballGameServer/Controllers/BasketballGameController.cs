@@ -184,11 +184,11 @@ namespace BasketballGameServer.Controllers
         #region GetPlayerOnTeamForSeason
         [Route("GetPlayerOnTeamForSeason")]
         [HttpGet]
-        public PlayerOnTeamForSeason GetPlayerOnTeamForSeason(User user)
+        public PlayerOnTeamForSeason GetPlayerOnTeamForSeason([FromQuery] int userId)
         {
             try
             {
-                Player p = context.Players.FirstOrDefault(x => x.UserId == user.Id);
+                Player p = context.Players.FirstOrDefault(x => x.UserId == userId);
                 return context.PlayerOnTeamForSeasons.FirstOrDefault(x => x.PlayerId == p.Id);
             }
             catch
