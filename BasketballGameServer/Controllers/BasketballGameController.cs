@@ -180,6 +180,23 @@ namespace BasketballGameServer.Controllers
             return context.Games.ToList();
         }
         #endregion
+
+        #region GetPlayerOnTeamForSeason
+        [Route("GetPlayerOnTeamForSeason")]
+        [HttpGet]
+        public PlayerOnTeamForSeason GetPlayerOnTeamForSeason(User user)
+        {
+            try
+            {
+                Player p = context.Players.FirstOrDefault(x => x.UserId == user.Id);
+                return context.PlayerOnTeamForSeasons.FirstOrDefault(x => x.PlayerId == p.Id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        #endregion
     }
 }
 
