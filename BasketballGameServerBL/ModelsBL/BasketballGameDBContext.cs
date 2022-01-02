@@ -59,5 +59,22 @@ namespace BasketballGameServerBL.Models
             return Users.Any(u => u.Email == email);
         }
         #endregion
+
+        #region AddTeam
+        public bool AddTeam(Team team)
+        {
+            try
+            {
+                this.Teams.Add(team);
+                this.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
     }
 }

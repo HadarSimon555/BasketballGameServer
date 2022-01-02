@@ -197,6 +197,34 @@ namespace BasketballGameServer.Controllers
             }
         }
         #endregion
+
+        #region AddTeam
+        [Route("AddTeam")]
+        [HttpPost]
+        public Team AddTeam([FromBody] Team team)
+        {
+            //Check user name and password
+            if (team != null)
+            {
+                bool addTeam = this.context.AddTeam(team);
+
+                if (addTeam)
+                {
+                    HttpContext.Session.SetObject("theUser", team);
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                    return team;
+                }
+                else
+                    return null;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
+        #endregion
     }
 }
 
