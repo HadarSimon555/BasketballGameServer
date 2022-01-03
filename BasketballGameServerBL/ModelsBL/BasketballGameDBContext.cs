@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace BasketballGameServerBL.Models
 {
-    public partial class BasketballGameDBContext:DbContext
+    public partial class BasketballGameDBContext : DbContext
     {
         #region Login
         // פעולת התחברות, אם ההתחברות לא הצליחה מחזיר null
         public User Login(string email, string pass)
         {
-            return this.Users.Where(u => u.Email == email && u.Pass == pass).FirstOrDefault();
+            return this.Users.Include(u => u.Players).ThenInclude(u => u.PlayerOnTeamForSeasons).ThenInclude(u => u.Team).Include(u => u.Coaches).ThenInclude(u => u.Teams).Where(u => u.Email == email && u.Pass == pass).FirstOrDefault();
         }
         #endregion
 
