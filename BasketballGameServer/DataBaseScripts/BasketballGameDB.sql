@@ -12,7 +12,7 @@ CREATE TABLE "Player"(
 ALTER TABLE
     "Player" ADD CONSTRAINT "player_id_primary" PRIMARY KEY("id");
 CREATE TABLE "Team"(
-    "id" INT IDENTITY(1,1) NOT NULL,
+    "id" INT NOT NULL,
     "coachId" INT NOT NULL,
     "leagueId" INT NOT NULL,
     "name" NVARCHAR(255) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE "Team"(
 ALTER TABLE
     "Team" ADD CONSTRAINT "team_id_primary" PRIMARY KEY("id");
 CREATE TABLE "PlayerOnTeamForSeason"(
-    "id" INT IDENTITY(1,1) NOT NULL,
+    "id" INT NOT NULL,
     "playerId" INT NOT NULL,
     "teamId" INT NOT NULL,
     "seasonId" INT NOT NULL,
@@ -30,19 +30,19 @@ CREATE TABLE "PlayerOnTeamForSeason"(
 ALTER TABLE
     "PlayerOnTeamForSeason" ADD CONSTRAINT "playeronteamforseason_id_primary" PRIMARY KEY("id");
 CREATE TABLE "Position"(
-    "id" INT IDENTITY(1,1) NOT NULL,
+    "id" INT NOT NULL,
     "name" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
     "Position" ADD CONSTRAINT "position_id_primary" PRIMARY KEY("id");
 CREATE TABLE "Season"(
-    "id" INT IDENTITY(1,1) NOT NULL,
+    "id" INT NOT NULL,
     "name" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
     "Season" ADD CONSTRAINT "season_id_primary" PRIMARY KEY("id");
 CREATE TABLE "Game"(
-    "id" INT IDENTITY(1,1) NOT NULL,
+    "id" INT NOT NULL,
     "seasonId" INT NOT NULL,
     "homeTeamId" INT NOT NULL,
     "awayTeamId" INT NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE "Game"(
 ALTER TABLE
     "Game" ADD CONSTRAINT "game_id_primary" PRIMARY KEY("id");
 CREATE TABLE "GameStats"(
-    "id" INT IDENTITY(1,1) NOT NULL,
+    "id" INT NOT NULL,
     "gameId" INT NOT NULL,
     "playerShots" INT NOT NULL,
     "playerId" INT NOT NULL
@@ -63,7 +63,7 @@ CREATE TABLE "GameStats"(
 ALTER TABLE
     "GameStats" ADD CONSTRAINT "gamestats_id_primary" PRIMARY KEY("id");
 CREATE TABLE "RequestGame"(
-    "id" INT IDENTITY(1,1) NOT NULL,
+    "id" INT NOT NULL,
     "requestStatusId" INT NOT NULL,
     "coachId" INT NOT NULL,
     "gameId" INT NOT NULL
@@ -71,39 +71,33 @@ CREATE TABLE "RequestGame"(
 ALTER TABLE
     "RequestGame" ADD CONSTRAINT "requestgame_id_primary" PRIMARY KEY("id");
 CREATE TABLE "Coach"(
-    "id" INT IDENTITY(1,1) NOT NULL,
+    "id" INT NOT NULL,
     "userId" INT NOT NULL,
-    "teamId" INT NOT NULL
+    "teamId" INT NULL
 );
 ALTER TABLE
     "Coach" ADD CONSTRAINT "coach_id_primary" PRIMARY KEY("id");
 CREATE TABLE "RequestStatus"(
-    "id" INT IDENTITY(1,1) NOT NULL,
+    "id" INT NOT NULL,
     "name" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
     "RequestStatus" ADD CONSTRAINT "requeststatus_id_primary" PRIMARY KEY("id");
-CREATE TABLE "League"(
-    "id" INT IDENTITY(1,1) NOT NULL,
-    "name" NVARCHAR(255) NOT NULL
-);
-ALTER TABLE
-    "League" ADD CONSTRAINT "league_id_primary" PRIMARY KEY("id");
 CREATE TABLE "GameStatus"(
-    "id" INT IDENTITY(1,1) NOT NULL,
+    "id" INT NOT NULL,
     "name" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
     "GameStatus" ADD CONSTRAINT "gamestatus_id_primary" PRIMARY KEY("id");
 CREATE TABLE "RequestToJoinTeam"(
-    "id" INT IDENTITY(1,1) NOT NULL,
+    "id" INT NOT NULL,
     "playerId" INT NOT NULL,
     "teamId" INT NOT NULL
 );
 ALTER TABLE
     "RequestToJoinTeam" ADD CONSTRAINT "requesttojointeam_id_primary" PRIMARY KEY("id");
 CREATE TABLE "User"(
-    "id" INT IDENTITY(1,1) NOT NULL,
+    "id" INT NOT NULL,
     "email" NVARCHAR(255) NOT NULL,
     "pass" NVARCHAR(255) NOT NULL,
     "birthDate" DATETIME NOT NULL,
@@ -150,8 +144,6 @@ ALTER TABLE
     "Coach" ADD CONSTRAINT "coach_userid_foreign" FOREIGN KEY("userId") REFERENCES "User"("id");
 ALTER TABLE
     "RequestGame" ADD CONSTRAINT "requestgame_requeststatusid_foreign" FOREIGN KEY("requestStatusId") REFERENCES "RequestStatus"("id");
-ALTER TABLE
-    "Team" ADD CONSTRAINT "team_leagueid_foreign" FOREIGN KEY("leagueId") REFERENCES "League"("id");
 ALTER TABLE
     "Game" ADD CONSTRAINT "game_gamestatusid_foreign" FOREIGN KEY("gameStatusId") REFERENCES "GameStatus"("id");
 ALTER TABLE

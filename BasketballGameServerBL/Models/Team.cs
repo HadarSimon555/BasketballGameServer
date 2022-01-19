@@ -23,7 +23,6 @@ namespace BasketballGameServerBL.Models
         public string Image { get; set; }
 
         public virtual Coach Coach { get; set; }
-        public virtual League League { get; set; }
         public virtual ICollection<Coach> Coaches { get; set; }
         public virtual ICollection<Game> GameAwayTeams { get; set; }
         public virtual ICollection<Game> GameHomeTeams { get; set; }
