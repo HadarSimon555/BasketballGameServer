@@ -227,12 +227,12 @@ namespace BasketballGameServer.Controllers
         #endregion
 
         #region GetLeagues
-        [Route("GetLeagues")]
-        [HttpGet]
-        public List<League> GetLeagues()
-        {
-            return context.Leagues.ToList();
-        }
+        //[Route("GetLeagues")]
+        //[HttpGet]
+        //public List<League> GetLeagues()
+        //{
+        //    return context.Leagues.ToList();
+        //}
         #endregion
     }
 }
