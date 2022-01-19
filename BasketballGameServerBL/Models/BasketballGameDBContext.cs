@@ -58,7 +58,6 @@ namespace BasketballGameServerBL.Models
                 entity.HasOne(d => d.Team)
                     .WithMany(p => p.Coaches)
                     .HasForeignKey(d => d.TeamId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("coach_teamid_foreign");
 
                 entity.HasOne(d => d.User)
