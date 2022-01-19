@@ -51,7 +51,15 @@ namespace BasketballGameServerBL.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.TeamId).HasColumnName("teamId");
+
                 entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.HasOne(d => d.Team)
+                    .WithMany(p => p.Coaches)
+                    .HasForeignKey(d => d.TeamId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("coach_teamid_foreign");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Coaches)
@@ -160,7 +168,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("Player");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Height).HasColumnName("height");
 

@@ -9,6 +9,7 @@ namespace BasketballGameServerBL.Models
     {
         public Team()
         {
+            Coaches = new HashSet<Coach>();
             GameAwayTeams = new HashSet<Game>();
             GameHomeTeams = new HashSet<Game>();
             PlayerOnTeamForSeasons = new HashSet<PlayerOnTeamForSeason>();
@@ -23,6 +24,7 @@ namespace BasketballGameServerBL.Models
 
         public virtual Coach Coach { get; set; }
         public virtual League League { get; set; }
+        public virtual ICollection<Coach> Coaches { get; set; }
         public virtual ICollection<Game> GameAwayTeams { get; set; }
         public virtual ICollection<Game> GameHomeTeams { get; set; }
         public virtual ICollection<PlayerOnTeamForSeason> PlayerOnTeamForSeasons { get; set; }
