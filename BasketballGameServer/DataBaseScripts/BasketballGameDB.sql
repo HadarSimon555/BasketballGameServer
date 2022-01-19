@@ -5,7 +5,7 @@ USE "BasketballGameDB"
 GO
 
 CREATE TABLE "Player"(
-    "id" INT IDENTITY(1,1) NOT NULL,
+    "id" INT NOT NULL,
     "height" FLOAT NOT NULL,
     "userId" INT NOT NULL
 );
@@ -72,7 +72,8 @@ ALTER TABLE
     "RequestGame" ADD CONSTRAINT "requestgame_id_primary" PRIMARY KEY("id");
 CREATE TABLE "Coach"(
     "id" INT IDENTITY(1,1) NOT NULL,
-    "userId" INT NOT NULL
+    "userId" INT NOT NULL,
+    "teamId" INT NOT NULL
 );
 ALTER TABLE
     "Coach" ADD CONSTRAINT "coach_id_primary" PRIMARY KEY("id");
@@ -130,6 +131,8 @@ ALTER TABLE
 ALTER TABLE
     "PlayerOnTeamForSeason" ADD CONSTRAINT "playeronteamforseason_teamid_foreign" FOREIGN KEY("teamId") REFERENCES "Team"("id");
 ALTER TABLE
+    "Coach" ADD CONSTRAINT "coach_teamid_foreign" FOREIGN KEY("teamId") REFERENCES "Team"("id");
+ALTER TABLE
     "PlayerOnTeamForSeason" ADD CONSTRAINT "playeronteamforseason_positionid_foreign" FOREIGN KEY("positionId") REFERENCES "Position"("id");
 ALTER TABLE
     "PlayerOnTeamForSeason" ADD CONSTRAINT "playeronteamforseason_seasonid_foreign" FOREIGN KEY("seasonId") REFERENCES "Season"("id");
@@ -140,9 +143,9 @@ ALTER TABLE
 ALTER TABLE
     "GameStats" ADD CONSTRAINT "gamestats_gameid_foreign" FOREIGN KEY("gameId") REFERENCES "Game"("id");
 ALTER TABLE
-    "Team" ADD CONSTRAINT "team_coachid_foreign" FOREIGN KEY("coachId") REFERENCES "Coach"("id");
-ALTER TABLE
     "RequestGame" ADD CONSTRAINT "requestgame_coachid_foreign" FOREIGN KEY("coachId") REFERENCES "Coach"("id");
+ALTER TABLE
+    "Team" ADD CONSTRAINT "team_coachid_foreign" FOREIGN KEY("coachId") REFERENCES "Coach"("id");
 ALTER TABLE
     "Coach" ADD CONSTRAINT "coach_userid_foreign" FOREIGN KEY("userId") REFERENCES "User"("id");
 ALTER TABLE
