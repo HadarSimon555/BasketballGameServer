@@ -14,7 +14,6 @@ ALTER TABLE
 CREATE TABLE "Team"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "coachId" INT NOT NULL,
-    "leagueId" INT NOT NULL,
     "name" NVARCHAR(255) NOT NULL,
     "image" NVARCHAR(255) NULL
 );
