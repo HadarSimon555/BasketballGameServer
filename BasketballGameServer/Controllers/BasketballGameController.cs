@@ -234,6 +234,16 @@ namespace BasketballGameServer.Controllers
         //    return context.Leagues.ToList();
         //}
         #endregion
+
+        #region GetOpenTeams
+        [Route("GetOpenTeams")]
+        [HttpGet]
+        public List<Team> GetOpenTeams()
+        {
+            List<Team> teams = context.Teams.Where(t => t.PlayerOnTeamForSeasons.Count() < 10).ToList();
+            return teams;
+        }
+        #endregion
     }
 }
 
