@@ -8,8 +8,8 @@ CREATE TABLE "Player"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "height" FLOAT NOT NULL,
     "userId" INT NOT NULL,
-    "positionId" INT NOT NULL,
-    "teamId" INT NOT NULL
+    "positionId" INT NULL,
+    "teamId" INT NULL
 );
 ALTER TABLE
     "Player" ADD CONSTRAINT "player_id_primary" PRIMARY KEY("id");

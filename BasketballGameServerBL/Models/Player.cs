@@ -16,8 +16,8 @@ namespace BasketballGameServerBL.Models
         public int Id { get; set; }
         public double Height { get; set; }
         public int UserId { get; set; }
-        public int PositionId { get; set; }
-        public int TeamId { get; set; }
+        public int? PositionId { get; set; }
+        public int? TeamId { get; set; }
 
         public virtual Position Position { get; set; }
         public virtual Team Team { get; set; }

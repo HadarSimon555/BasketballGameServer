@@ -182,20 +182,20 @@ namespace BasketballGameServer.Controllers
         #endregion
 
         #region GetPlayerOnTeamForSeason
-        [Route("GetPlayerOnTeamForSeason")]
-        [HttpGet]
-        public PlayerOnTeamForSeason GetPlayerOnTeamForSeason([FromQuery] int userId)
-        {
-            try
-            {
-                Player p = context.Players.FirstOrDefault(x => x.UserId == userId);
-                return context.PlayerOnTeamForSeasons.FirstOrDefault(x => x.PlayerId == p.Id);
-            }
-            catch
-            {
-                return null;
-            }
-        }
+        //[Route("GetPlayerOnTeamForSeason")]
+        //[HttpGet]
+        //public PlayerOnTeamForSeason GetPlayerOnTeamForSeason([FromQuery] int userId)
+        //{
+        //    try
+        //    {
+        //        Player p = context.Players.FirstOrDefault(x => x.UserId == userId);
+        //        return context.PlayerOnTeamForSeasons.FirstOrDefault(x => x.PlayerId == p.Id);
+        //    }
+        //    catch
+        //    {
+        //        return null;
+        //    }
+        //}
         #endregion
 
         #region AddTeam
@@ -240,7 +240,8 @@ namespace BasketballGameServer.Controllers
         [HttpGet]
         public List<Team> GetOpenTeams()
         {
-            List<Team> teams = context.Teams.Where(t => t.PlayerOnTeamForSeasons.Count() < 10).ToList();
+            //List<Team> teams = context.Teams.Where(t => t.PlayerOnTeamForSeasons.Count() < 10).ToList();
+            List<Team> teams = context.Teams.Where(t => t.Players.Count() < 10).ToList();
             return teams;
         }
         #endregion
