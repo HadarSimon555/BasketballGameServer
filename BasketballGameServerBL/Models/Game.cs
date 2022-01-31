@@ -26,7 +26,6 @@ namespace BasketballGameServerBL.Models
         public virtual Team AwayTeam { get; set; }
         public virtual GameStatus GameStatus { get; set; }
         public virtual Team HomeTeam { get; set; }
-        public virtual Season Season { get; set; }
         public virtual ICollection<GameStat> GameStats { get; set; }
         public virtual ICollection<RequestGame> RequestGames { get; set; }
     }

@@ -22,12 +22,10 @@ namespace BasketballGameServerBL.Models
         public virtual DbSet<GameStat> GameStats { get; set; }
         public virtual DbSet<GameStatus> GameStatuses { get; set; }
         public virtual DbSet<Player> Players { get; set; }
-        public virtual DbSet<PlayerOnTeamForSeason> PlayerOnTeamForSeasons { get; set; }
         public virtual DbSet<Position> Positions { get; set; }
         public virtual DbSet<RequestGame> RequestGames { get; set; }
         public virtual DbSet<RequestStatus> RequestStatuses { get; set; }
         public virtual DbSet<RequestToJoinTeam> RequestToJoinTeams { get; set; }
-        public virtual DbSet<Season> Seasons { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
@@ -107,12 +105,6 @@ namespace BasketballGameServerBL.Models
                     .HasForeignKey(d => d.HomeTeamId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("game_hometeamid_foreign");
-
-                entity.HasOne(d => d.Season)
-                    .WithMany(p => p.Games)
-                    .HasForeignKey(d => d.SeasonId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("game_seasonid_foreign");
             });
 
             modelBuilder.Entity<GameStat>(entity =>
@@ -158,52 +150,29 @@ namespace BasketballGameServerBL.Models
 
                 entity.Property(e => e.Height).HasColumnName("height");
 
+                entity.Property(e => e.PositionId).HasColumnName("positionId");
+
+                entity.Property(e => e.TeamId).HasColumnName("teamId");
+
                 entity.Property(e => e.UserId).HasColumnName("userId");
+
+                entity.HasOne(d => d.Position)
+                    .WithMany(p => p.Players)
+                    .HasForeignKey(d => d.PositionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("player_positionid_foreign");
+
+                entity.HasOne(d => d.Team)
+                    .WithMany(p => p.Players)
+                    .HasForeignKey(d => d.TeamId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("player_teamid_foreign");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Players)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("player_userid_foreign");
-            });
-
-            modelBuilder.Entity<PlayerOnTeamForSeason>(entity =>
-            {
-                entity.ToTable("PlayerOnTeamForSeason");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.PlayerId).HasColumnName("playerId");
-
-                entity.Property(e => e.PositionId).HasColumnName("positionId");
-
-                entity.Property(e => e.SeasonId).HasColumnName("seasonId");
-
-                entity.Property(e => e.TeamId).HasColumnName("teamId");
-
-                entity.HasOne(d => d.Player)
-                    .WithMany(p => p.PlayerOnTeamForSeasons)
-                    .HasForeignKey(d => d.PlayerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("playeronteamforseason_playerid_foreign");
-
-                entity.HasOne(d => d.Position)
-                    .WithMany(p => p.PlayerOnTeamForSeasons)
-                    .HasForeignKey(d => d.PositionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("playeronteamforseason_positionid_foreign");
-
-                entity.HasOne(d => d.Season)
-                    .WithMany(p => p.PlayerOnTeamForSeasons)
-                    .HasForeignKey(d => d.SeasonId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("playeronteamforseason_seasonid_foreign");
-
-                entity.HasOne(d => d.Team)
-                    .WithMany(p => p.PlayerOnTeamForSeasons)
-                    .HasForeignKey(d => d.TeamId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("playeronteamforseason_teamid_foreign");
             });
 
             modelBuilder.Entity<Position>(entity =>
@@ -282,18 +251,6 @@ namespace BasketballGameServerBL.Models
                     .HasForeignKey(d => d.TeamId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("requesttojointeam_teamid_foreign");
-            });
-
-            modelBuilder.Entity<Season>(entity =>
-            {
-                entity.ToTable("Season");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("name");
             });
 
             modelBuilder.Entity<Team>(entity =>

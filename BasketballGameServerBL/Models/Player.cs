@@ -10,17 +10,19 @@ namespace BasketballGameServerBL.Models
         public Player()
         {
             GameStats = new HashSet<GameStat>();
-            PlayerOnTeamForSeasons = new HashSet<PlayerOnTeamForSeason>();
             RequestToJoinTeams = new HashSet<RequestToJoinTeam>();
         }
 
         public int Id { get; set; }
         public double Height { get; set; }
         public int UserId { get; set; }
+        public int PositionId { get; set; }
+        public int TeamId { get; set; }
 
+        public virtual Position Position { get; set; }
+        public virtual Team Team { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<GameStat> GameStats { get; set; }
-        public virtual ICollection<PlayerOnTeamForSeason> PlayerOnTeamForSeasons { get; set; }
         public virtual ICollection<RequestToJoinTeam> RequestToJoinTeams { get; set; }
     }
 }

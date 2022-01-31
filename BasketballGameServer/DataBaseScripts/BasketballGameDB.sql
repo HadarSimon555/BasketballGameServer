@@ -7,7 +7,9 @@ GO
 CREATE TABLE "Player"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "height" FLOAT NOT NULL,
-    "userId" INT NOT NULL
+    "userId" INT NOT NULL,
+    "positionId" INT NOT NULL,
+    "teamId" INT NOT NULL
 );
 ALTER TABLE
     "Player" ADD CONSTRAINT "player_id_primary" PRIMARY KEY("id");
@@ -19,27 +21,12 @@ CREATE TABLE "Team"(
 );
 ALTER TABLE
     "Team" ADD CONSTRAINT "team_id_primary" PRIMARY KEY("id");
-CREATE TABLE "PlayerOnTeamForSeason"(
-    "id" INT IDENTITY(1,1) NOT NULL,
-    "playerId" INT NOT NULL,
-    "teamId" INT NOT NULL,
-    "seasonId" INT NOT NULL,
-    "positionId" INT NOT NULL
-);
-ALTER TABLE
-    "PlayerOnTeamForSeason" ADD CONSTRAINT "playeronteamforseason_id_primary" PRIMARY KEY("id");
 CREATE TABLE "Position"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "name" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
     "Position" ADD CONSTRAINT "position_id_primary" PRIMARY KEY("id");
-CREATE TABLE "Season"(
-    "id" INT IDENTITY(1,1) NOT NULL,
-    "name" NVARCHAR(255) NOT NULL
-);
-ALTER TABLE
-    "Season" ADD CONSTRAINT "season_id_primary" PRIMARY KEY("id");
 CREATE TABLE "Game"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "seasonId" INT NOT NULL,
@@ -112,8 +99,6 @@ CREATE UNIQUE INDEX "user_email_unique" ON
 ALTER TABLE
     "RequestToJoinTeam" ADD CONSTRAINT "requesttojointeam_playerid_foreign" FOREIGN KEY("playerId") REFERENCES "Player"("id");
 ALTER TABLE
-    "PlayerOnTeamForSeason" ADD CONSTRAINT "playeronteamforseason_playerid_foreign" FOREIGN KEY("playerId") REFERENCES "Player"("id");
-ALTER TABLE
     "GameStats" ADD CONSTRAINT "gamestats_playerid_foreign" FOREIGN KEY("playerId") REFERENCES "Player"("id");
 ALTER TABLE
     "RequestToJoinTeam" ADD CONSTRAINT "requesttojointeam_teamid_foreign" FOREIGN KEY("teamId") REFERENCES "Team"("id");
@@ -122,15 +107,11 @@ ALTER TABLE
 ALTER TABLE
     "Game" ADD CONSTRAINT "game_hometeamid_foreign" FOREIGN KEY("homeTeamId") REFERENCES "Team"("id");
 ALTER TABLE
-    "PlayerOnTeamForSeason" ADD CONSTRAINT "playeronteamforseason_teamid_foreign" FOREIGN KEY("teamId") REFERENCES "Team"("id");
-ALTER TABLE
     "Coach" ADD CONSTRAINT "coach_teamid_foreign" FOREIGN KEY("teamId") REFERENCES "Team"("id");
 ALTER TABLE
-    "PlayerOnTeamForSeason" ADD CONSTRAINT "playeronteamforseason_positionid_foreign" FOREIGN KEY("positionId") REFERENCES "Position"("id");
+    "Player" ADD CONSTRAINT "player_teamid_foreign" FOREIGN KEY("teamId") REFERENCES "Team"("id");
 ALTER TABLE
-    "PlayerOnTeamForSeason" ADD CONSTRAINT "playeronteamforseason_seasonid_foreign" FOREIGN KEY("seasonId") REFERENCES "Season"("id");
-ALTER TABLE
-    "Game" ADD CONSTRAINT "game_seasonid_foreign" FOREIGN KEY("seasonId") REFERENCES "Season"("id");
+    "Player" ADD CONSTRAINT "player_positionid_foreign" FOREIGN KEY("positionId") REFERENCES "Position"("id");
 ALTER TABLE
     "RequestGame" ADD CONSTRAINT "requestgame_gameid_foreign" FOREIGN KEY("gameId") REFERENCES "Game"("id");
 ALTER TABLE

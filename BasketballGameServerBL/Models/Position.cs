@@ -9,12 +9,12 @@ namespace BasketballGameServerBL.Models
     {
         public Position()
         {
-            PlayerOnTeamForSeasons = new HashSet<PlayerOnTeamForSeason>();
+            Players = new HashSet<Player>();
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<PlayerOnTeamForSeason> PlayerOnTeamForSeasons { get; set; }
+        public virtual ICollection<Player> Players { get; set; }
     }
 }
