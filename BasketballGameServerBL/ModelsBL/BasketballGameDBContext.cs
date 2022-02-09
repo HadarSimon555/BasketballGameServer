@@ -82,7 +82,7 @@ namespace BasketballGameServerBL.Models
         {
             try
             {
-                this.RequestToJoinTeams.Add(request);
+                this.RequestToJoinTeams.Add(new RequestToJoinTeam() { PlayerId = request.Player.Id, TeamId = request.Team.Id });
                 this.SaveChanges();
                 return true;
             }
