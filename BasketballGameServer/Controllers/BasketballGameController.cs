@@ -245,6 +245,34 @@ namespace BasketballGameServer.Controllers
             return teams;
         }
         #endregion
+
+        #region AddRequestToJoinTeam
+        [Route("AddRequestToJoinTeam")]
+        [HttpPost]
+        public bool AddRequestToJoinTeam([FromBody] RequestToJoinTeam request)
+        {
+            //Check user name and password
+            if (request != null)
+            {
+                bool addRequest = this.context.AddRequestToJoinTeam(request);
+
+                if (addRequest)
+                {
+                    HttpContext.Session.SetObject("theUser", request);
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+        #endregion
     }
 }
 

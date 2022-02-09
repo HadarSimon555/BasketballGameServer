@@ -76,5 +76,22 @@ namespace BasketballGameServerBL.Models
             }
         }
         #endregion
+
+        #region AddRequestToJoinTeam
+        public bool AddRequestToJoinTeam(RequestToJoinTeam request)
+        {
+            try
+            {
+                this.RequestToJoinTeams.Add(request);
+                this.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
     }
 }
