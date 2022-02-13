@@ -65,7 +65,7 @@ namespace BasketballGameServerBL.Models
         {
             try
             {
-                this.Teams.Add(team);
+                this.Teams.Update(team);
                 this.SaveChanges();
                 return true;
             }
