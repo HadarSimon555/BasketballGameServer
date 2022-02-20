@@ -279,7 +279,7 @@ namespace BasketballGameServer.Controllers
         [HttpGet]
         public List<RequestToJoinTeam> GetRequestsToJoinTeam([FromQuery] int coachId)
         {
-            List<RequestToJoinTeam> requests = context.RequestToJoinTeams.Where(c => c.Id == coachId).ToList();
+            List<RequestToJoinTeam> requests = context.GetRequests(coachId);
             return requests;
         }
         #endregion

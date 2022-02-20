@@ -92,6 +92,11 @@ namespace BasketballGameServerBL.Models
                 return false;
             }
         }
+
+        public List<RequestToJoinTeam> GetRequests(int coachId)
+        {
+            return this.RequestToJoinTeams.Include(r => r.Player).ThenInclude(p=>p.User).Include(r => r.Team).Where(c => c.Id == coachId).ToList();
+        }
         #endregion
     }
 }
