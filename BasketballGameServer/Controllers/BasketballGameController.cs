@@ -283,6 +283,16 @@ namespace BasketballGameServer.Controllers
             return requests;
         }
         #endregion
+
+        #region UpdatePlayer
+        [Route("UpdatePlayer")]
+        [HttpPost]
+        public Player UpdatePlayer([FromBody] Player player)
+        {
+
+        }
+        #endregion
+
     }
 }
 
