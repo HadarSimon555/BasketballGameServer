@@ -287,9 +287,26 @@ namespace BasketballGameServer.Controllers
         #region UpdatePlayer
         [Route("UpdatePlayer")]
         [HttpPost]
-        public Player UpdatePlayer([FromBody] Player player)
+        public bool UpdatePlayer([FromBody] Player player)
         {
+            if (player != null)
+            {
+                bool updatePlayer = this.context.UpdatePlayer(player);
 
+                if(updatePlayer)
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
         }
         #endregion
 

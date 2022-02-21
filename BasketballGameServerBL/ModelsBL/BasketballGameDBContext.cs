@@ -98,5 +98,22 @@ namespace BasketballGameServerBL.Models
             return this.RequestToJoinTeams.Include(r => r.Player).ThenInclude(p=>p.User).Include(r => r.Team).Where(c => c.Id == coachId).ToList();
         }
         #endregion
+
+        #region UpdatePlayer
+        public bool UpdatePlayer(Player player)
+        {
+            try
+            {
+                this.Players.Update(player);
+                this.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
     }
 }
