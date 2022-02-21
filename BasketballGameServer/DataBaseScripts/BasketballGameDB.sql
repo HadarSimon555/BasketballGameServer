@@ -63,12 +63,12 @@ CREATE TABLE "Coach"(
 );
 ALTER TABLE
     "Coach" ADD CONSTRAINT "coach_id_primary" PRIMARY KEY("id");
-CREATE TABLE "RequestStatus"(
+CREATE TABLE "RequestGameStatus"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "name" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
-    "RequestStatus" ADD CONSTRAINT "requeststatus_id_primary" PRIMARY KEY("id");
+    "RequestGameStatus" ADD CONSTRAINT "requestgamestatus_id_primary" PRIMARY KEY("id");
 CREATE TABLE "GameStatus"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "name" NVARCHAR(255) NOT NULL
@@ -96,6 +96,9 @@ ALTER TABLE
     "User" ADD CONSTRAINT "user_id_primary" PRIMARY KEY("id");
 CREATE UNIQUE INDEX "user_email_unique" ON
     "User"("email");
+CREATE TABLE "RequestToJoinTeamStatus"("id" INT NOT NULL);
+ALTER TABLE
+    "RequestToJoinTeamStatus" ADD CONSTRAINT "requesttojointeamstatus_id_primary" PRIMARY KEY("id");
 ALTER TABLE
     "RequestToJoinTeam" ADD CONSTRAINT "requesttojointeam_playerid_foreign" FOREIGN KEY("playerId") REFERENCES "Player"("id");
 ALTER TABLE
@@ -123,7 +126,7 @@ ALTER TABLE
 ALTER TABLE
     "Coach" ADD CONSTRAINT "coach_userid_foreign" FOREIGN KEY("userId") REFERENCES "User"("id");
 ALTER TABLE
-    "RequestGame" ADD CONSTRAINT "requestgame_requeststatusid_foreign" FOREIGN KEY("requestStatusId") REFERENCES "RequestStatus"("id");
+    "RequestGame" ADD CONSTRAINT "requestgame_requeststatusid_foreign" FOREIGN KEY("requestStatusId") REFERENCES "RequestGameStatus"("id");
 ALTER TABLE
     "Game" ADD CONSTRAINT "game_gamestatusid_foreign" FOREIGN KEY("gameStatusId") REFERENCES "GameStatus"("id");
 ALTER TABLE

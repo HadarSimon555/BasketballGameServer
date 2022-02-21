@@ -24,8 +24,9 @@ namespace BasketballGameServerBL.Models
         public virtual DbSet<Player> Players { get; set; }
         public virtual DbSet<Position> Positions { get; set; }
         public virtual DbSet<RequestGame> RequestGames { get; set; }
-        public virtual DbSet<RequestStatus> RequestStatuses { get; set; }
+        public virtual DbSet<RequestGameStatus> RequestGameStatuses { get; set; }
         public virtual DbSet<RequestToJoinTeam> RequestToJoinTeams { get; set; }
+        public virtual DbSet<RequestToJoinTeamStatus> RequestToJoinTeamStatuses { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
@@ -216,9 +217,9 @@ namespace BasketballGameServerBL.Models
                     .HasConstraintName("requestgame_requeststatusid_foreign");
             });
 
-            modelBuilder.Entity<RequestStatus>(entity =>
+            modelBuilder.Entity<RequestGameStatus>(entity =>
             {
-                entity.ToTable("RequestStatus");
+                entity.ToTable("RequestGameStatus");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -249,6 +250,15 @@ namespace BasketballGameServerBL.Models
                     .HasForeignKey(d => d.TeamId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("requesttojointeam_teamid_foreign");
+            });
+
+            modelBuilder.Entity<RequestToJoinTeamStatus>(entity =>
+            {
+                entity.ToTable("RequestToJoinTeamStatus");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
             });
 
             modelBuilder.Entity<Team>(entity =>
