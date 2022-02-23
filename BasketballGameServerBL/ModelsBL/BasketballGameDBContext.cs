@@ -97,11 +97,18 @@ namespace BasketballGameServerBL.Models
         #region GetRequests
         public List<RequestToJoinTeam> GetRequests(int coachId)
         {
-           // List<RequestToJoinTeam> list = this.RequestToJoinTeams.Include(r => r.Player).ThenInclude(p => p.User).Include(r => r.Team).ThenInclude(c => c.Coach).Where(c => c.Id == coachId && r => r.RequestToJoinTeamStatus == "no answer yet").ToList();
-            return null;
+            try
+            {
+                List<RequestToJoinTeam> list = this.RequestToJoinTeams.Include(r => r.Player).ThenInclude(p => p.User).Include(r => r.Team).ThenInclude(c => c.Coach).Where(c => c.Id == coachId && c.RequestToJoinTeamStatus.Id == 3).ToList();
+                return list;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
         #endregion
-
 
         #region UpdatePlayer
         public bool UpdatePlayer(Player player)

@@ -310,6 +310,33 @@ namespace BasketballGameServer.Controllers
         }
         #endregion
 
+        #region ApproveRequestToJoinTeam
+        [Route("ApproveRequestToJoinTeam")]
+        [HttpPost]
+        public bool ApproveRequestToJoinTeam([FromBody] Player player)
+        {
+            if (player != null)
+            {
+                bool updatePlayer = this.context.UpdatePlayer(player);
+
+                if (updatePlayer)
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+
+        #endregion
+
     }
 }
 
