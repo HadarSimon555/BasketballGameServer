@@ -14,7 +14,7 @@ namespace BasketballGameServerBL.Models
         // פעולת התחברות, אם ההתחברות לא הצליחה מחזיר null
         public User Login(string email, string pass)
         {
-            return this.Users.Include(u => u.Players).ThenInclude(u => u.Team).Include(u => u.Coaches).ThenInclude(u => u.Teams).Where(u => u.Email == email && u.Pass == pass).FirstOrDefault();
+            return this.Users.Include(u => u.Players).ThenInclude(u => u.Team).Include(u => u.Coaches).ThenInclude(u => u.Team).ThenInclude(c=>c.RequestToJoinTeams).Where(u => u.Email == email && u.Pass == pass).FirstOrDefault();
         }
         #endregion
 
@@ -82,7 +82,9 @@ namespace BasketballGameServerBL.Models
         {
             try
             {
-                this.RequestToJoinTeams.Add(new RequestToJoinTeam() { PlayerId = request.Player.Id, TeamId = request.Team.Id });
+                request.RequestToJoinTeamStatus = this.RequestToJoinTeamStatuses.Where(r => r.Id == 3).FirstOrDefault();
+                this.RequestToJoinTeams.Update(request);
+               
                 this.SaveChanges();
                 return true;
             }

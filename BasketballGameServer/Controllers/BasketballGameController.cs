@@ -51,7 +51,7 @@ namespace BasketballGameServer.Controllers
                     return null;
                 }
             }
-            catch
+            catch(Exception e)
             {
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 return null;
@@ -317,6 +317,9 @@ namespace BasketballGameServer.Controllers
         {
             if (player != null)
             {
+                RequestToJoinTeam request = player.RequestToJoinTeams.FirstOrDefault();
+                if (request != null)
+                    request.RequestToJoinTeamStatus = context.RequestToJoinTeamStatuses.Where(r => r.Id == 1).FirstOrDefault();
                 bool updatePlayer = this.context.UpdatePlayer(player);
 
                 if (updatePlayer)

@@ -51,7 +51,7 @@ namespace BasketballGameServer
             string connectionString = this.Configuration.GetConnectionString("BasketballGameDB");
 
             services.AddDbContext<BasketballGameDBContext>(options => options
-                                                                .UseSqlServer(connectionString));
+                                                                .UseSqlServer(connectionString).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
             //.UseLazyLoadingProxies());
             #endregion
         }
