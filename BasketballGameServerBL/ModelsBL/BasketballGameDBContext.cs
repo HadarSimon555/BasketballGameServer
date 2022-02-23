@@ -92,12 +92,16 @@ namespace BasketballGameServerBL.Models
                 return false;
             }
         }
+        #endregion
 
+        #region GetRequests
         public List<RequestToJoinTeam> GetRequests(int coachId)
         {
-            return this.RequestToJoinTeams.Include(r => r.Player).ThenInclude(p => p.User).Include(r => r.Team).ThenInclude(c => c.Coach).Where(c => c.Id == coachId).ToList();
+           // List<RequestToJoinTeam> list = this.RequestToJoinTeams.Include(r => r.Player).ThenInclude(p => p.User).Include(r => r.Team).ThenInclude(c => c.Coach).Where(c => c.Id == coachId && r => r.RequestToJoinTeamStatus == "no answer yet").ToList();
+            return null;
         }
         #endregion
+
 
         #region UpdatePlayer
         public bool UpdatePlayer(Player player)

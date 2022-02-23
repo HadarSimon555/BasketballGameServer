@@ -78,7 +78,8 @@ ALTER TABLE
 CREATE TABLE "RequestToJoinTeam"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "playerId" INT NOT NULL,
-    "teamId" INT NOT NULL
+    "teamId" INT NOT NULL,
+    "requestToJoinTeamId" INT NOT NULL
 );
 ALTER TABLE
     "RequestToJoinTeam" ADD CONSTRAINT "requesttojointeam_id_primary" PRIMARY KEY("id");
@@ -96,7 +97,10 @@ ALTER TABLE
     "User" ADD CONSTRAINT "user_id_primary" PRIMARY KEY("id");
 CREATE UNIQUE INDEX "user_email_unique" ON
     "User"("email");
-CREATE TABLE "RequestToJoinTeamStatus"("id" INT NOT NULL);
+CREATE TABLE "RequestToJoinTeamStatus"(
+    "id" INT IDENTITY(1,1) NOT NULL,
+    "name" NVARCHAR(255) NOT NULL
+);
 ALTER TABLE
     "RequestToJoinTeamStatus" ADD CONSTRAINT "requesttojointeamstatus_id_primary" PRIMARY KEY("id");
 ALTER TABLE
@@ -131,3 +135,5 @@ ALTER TABLE
     "Game" ADD CONSTRAINT "game_gamestatusid_foreign" FOREIGN KEY("gameStatusId") REFERENCES "GameStatus"("id");
 ALTER TABLE
     "Player" ADD CONSTRAINT "player_userid_foreign" FOREIGN KEY("userId") REFERENCES "User"("id");
+ALTER TABLE
+    "RequestToJoinTeam" ADD CONSTRAINT "requesttojointeam_requesttojointeamid_foreign" FOREIGN KEY("requestToJoinTeamId") REFERENCES "RequestToJoinTeamStatus"("id");

@@ -237,6 +237,8 @@ namespace BasketballGameServerBL.Models
 
                 entity.Property(e => e.PlayerId).HasColumnName("playerId");
 
+                entity.Property(e => e.RequestToJoinTeamId).HasColumnName("requestToJoinTeamId");
+
                 entity.Property(e => e.TeamId).HasColumnName("teamId");
 
                 entity.HasOne(d => d.Player)
@@ -244,6 +246,12 @@ namespace BasketballGameServerBL.Models
                     .HasForeignKey(d => d.PlayerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("requesttojointeam_playerid_foreign");
+
+                entity.HasOne(d => d.RequestToJoinTeamNavigation)
+                    .WithMany(p => p.RequestToJoinTeams)
+                    .HasForeignKey(d => d.RequestToJoinTeamId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("requesttojointeam_requesttojointeamid_foreign");
 
                 entity.HasOne(d => d.Team)
                     .WithMany(p => p.RequestToJoinTeams)
@@ -256,9 +264,12 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("RequestToJoinTeamStatus");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("name");
             });
 
             modelBuilder.Entity<Team>(entity =>
