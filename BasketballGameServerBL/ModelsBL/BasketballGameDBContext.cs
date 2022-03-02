@@ -101,7 +101,7 @@ namespace BasketballGameServerBL.Models
         {
             try
             {
-                List<RequestToJoinTeam> list = this.RequestToJoinTeams.Include(r => r.Player).ThenInclude(p => p.User).Include(r => r.Team).ThenInclude(c => c.Coach).Where(c => c.Id == coachId && c.RequestToJoinTeamStatus.Id == 3).ToList();
+                List<RequestToJoinTeam> list = this.RequestToJoinTeams.Include(r => r.Player).ThenInclude(p => p.User).Include(r => r.Team).ThenInclude(c => c.Coach).Include(r=>r.RequestToJoinTeamStatus).Where(c => c.Team.CoachId == coachId && c.RequestToJoinTeamStatus.Id == 3).ToList();
                 return list;
             }
             catch (Exception e)
