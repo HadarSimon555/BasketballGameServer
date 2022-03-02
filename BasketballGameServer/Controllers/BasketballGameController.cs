@@ -240,7 +240,6 @@ namespace BasketballGameServer.Controllers
         [HttpGet]
         public List<Team> GetOpenTeams()
         {
-            //List<Team> teams = context.Teams.Where(t => t.PlayerOnTeamForSeasons.Count() < 10).ToList();
             List<Team> teams = context.Teams.Where(t => t.Players.Count() < 10).ToList();
             return teams;
         }
@@ -370,6 +369,15 @@ namespace BasketballGameServer.Controllers
 
         #endregion
 
+        #region GetTeams
+        [Route("GetTeams")]
+        [HttpGet]
+        public List<Team> GetTeams()
+        {
+            List<Team> teams = context.Teams.Where(t => t.Players.Count() < 3).ToList();
+            return teams;
+        }
+        #endregion
     }
 }
 
