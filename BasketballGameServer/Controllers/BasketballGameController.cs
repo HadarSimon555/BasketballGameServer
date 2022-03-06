@@ -374,7 +374,7 @@ namespace BasketballGameServer.Controllers
         [HttpGet]
         public List<Team> GetTeams()
         {
-            List<Team> teams = context.Teams.Where(t => t.Players.Count() < 3).ToList();
+            List<Team> teams = context.Teams.Where(t => t.Players.Count() >= 3).ToList();
             return teams;
         }
         #endregion
