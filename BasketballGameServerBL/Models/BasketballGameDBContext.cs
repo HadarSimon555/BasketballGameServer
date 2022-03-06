@@ -22,7 +22,6 @@ namespace BasketballGameServerBL.Models
         public virtual DbSet<GameStat> GameStats { get; set; }
         public virtual DbSet<GameStatus> GameStatuses { get; set; }
         public virtual DbSet<Player> Players { get; set; }
-        public virtual DbSet<Position> Positions { get; set; }
         public virtual DbSet<RequestGame> RequestGames { get; set; }
         public virtual DbSet<RequestGameStatus> RequestGameStatuses { get; set; }
         public virtual DbSet<RequestToJoinTeam> RequestToJoinTeams { get; set; }
@@ -84,8 +83,6 @@ namespace BasketballGameServerBL.Models
                 entity.Property(e => e.ScoreAwayTeam).HasColumnName("scoreAwayTeam");
 
                 entity.Property(e => e.ScoreHomeTeam).HasColumnName("scoreHomeTeam");
-
-                entity.Property(e => e.SeasonId).HasColumnName("seasonId");
 
                 entity.Property(e => e.Time).HasColumnName("time");
 
@@ -151,16 +148,9 @@ namespace BasketballGameServerBL.Models
 
                 entity.Property(e => e.Height).HasColumnName("height");
 
-                entity.Property(e => e.PositionId).HasColumnName("positionId");
-
                 entity.Property(e => e.TeamId).HasColumnName("teamId");
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
-
-                entity.HasOne(d => d.Position)
-                    .WithMany(p => p.Players)
-                    .HasForeignKey(d => d.PositionId)
-                    .HasConstraintName("player_positionid_foreign");
 
                 entity.HasOne(d => d.Team)
                     .WithMany(p => p.Players)
@@ -172,18 +162,6 @@ namespace BasketballGameServerBL.Models
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("player_userid_foreign");
-            });
-
-            modelBuilder.Entity<Position>(entity =>
-            {
-                entity.ToTable("Position");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("name");
             });
 
             modelBuilder.Entity<RequestGame>(entity =>
@@ -308,11 +286,6 @@ namespace BasketballGameServerBL.Models
                 entity.Property(e => e.BirthDate)
                     .HasColumnType("datetime")
                     .HasColumnName("birthDate");
-
-                entity.Property(e => e.City)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("city");
 
                 entity.Property(e => e.Email)
                     .IsRequired()

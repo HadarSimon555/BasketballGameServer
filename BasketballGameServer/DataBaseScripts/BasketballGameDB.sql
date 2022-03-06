@@ -8,7 +8,6 @@ CREATE TABLE "Player"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "height" FLOAT NOT NULL,
     "userId" INT NOT NULL,
-    "positionId" INT NULL,
     "teamId" INT NULL
 );
 ALTER TABLE
@@ -21,15 +20,8 @@ CREATE TABLE "Team"(
 );
 ALTER TABLE
     "Team" ADD CONSTRAINT "team_id_primary" PRIMARY KEY("id");
-CREATE TABLE "Position"(
-    "id" INT IDENTITY(1,1) NOT NULL,
-    "name" NVARCHAR(255) NOT NULL
-);
-ALTER TABLE
-    "Position" ADD CONSTRAINT "position_id_primary" PRIMARY KEY("id");
 CREATE TABLE "Game"(
     "id" INT IDENTITY(1,1) NOT NULL,
-    "seasonId" INT NOT NULL,
     "homeTeamId" INT NOT NULL,
     "awayTeamId" INT NOT NULL,
     "gameStatusId" INT NOT NULL,
@@ -90,7 +82,6 @@ CREATE TABLE "User"(
     "birthDate" DATETIME NOT NULL,
     "image" NVARCHAR(255) NULL,
     "gender" NVARCHAR(255) NOT NULL,
-    "city" NVARCHAR(255) NOT NULL,
     "name" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
@@ -117,8 +108,6 @@ ALTER TABLE
     "Coach" ADD CONSTRAINT "coach_teamid_foreign" FOREIGN KEY("teamId") REFERENCES "Team"("id");
 ALTER TABLE
     "Player" ADD CONSTRAINT "player_teamid_foreign" FOREIGN KEY("teamId") REFERENCES "Team"("id");
-ALTER TABLE
-    "Player" ADD CONSTRAINT "player_positionid_foreign" FOREIGN KEY("positionId") REFERENCES "Position"("id");
 ALTER TABLE
     "RequestGame" ADD CONSTRAINT "requestgame_gameid_foreign" FOREIGN KEY("gameId") REFERENCES "Game"("id");
 ALTER TABLE

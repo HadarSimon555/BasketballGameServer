@@ -19,7 +19,6 @@ namespace BasketballGameServerBL.Models
         public DateTime BirthDate { get; set; }
         public string Image { get; set; }
         public string Gender { get; set; }
-        public string City { get; set; }
         public string Name { get; set; }
 
         public virtual ICollection<Coach> Coaches { get; set; }
