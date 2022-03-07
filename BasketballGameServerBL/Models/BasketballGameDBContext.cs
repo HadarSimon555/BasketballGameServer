@@ -76,11 +76,6 @@ namespace BasketballGameServerBL.Models
 
                 entity.Property(e => e.HomeTeamId).HasColumnName("homeTeamId");
 
-                entity.Property(e => e.Position)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .HasColumnName("position");
-
                 entity.Property(e => e.ScoreAwayTeam).HasColumnName("scoreAwayTeam");
 
                 entity.Property(e => e.ScoreHomeTeam).HasColumnName("scoreHomeTeam");
@@ -131,9 +126,7 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("GameStatus");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -179,6 +172,11 @@ namespace BasketballGameServerBL.Models
 
                 entity.Property(e => e.GameId).HasColumnName("gameId");
 
+                entity.Property(e => e.Position)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("position");
+
                 entity.Property(e => e.RequestStatusId).HasColumnName("requestStatusId");
 
                 entity.Property(e => e.Time).HasColumnName("time");
@@ -206,7 +204,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("RequestGameStatus");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
