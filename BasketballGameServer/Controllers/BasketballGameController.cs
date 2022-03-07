@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BasketballGameServerBL.Models;
 using System.IO;
 using BasketballGameServer.DTO;
+using Microsoft.EntityFrameworkCore;
 
 namespace BasketballGameServer.Controllers
 {
@@ -51,7 +52,7 @@ namespace BasketballGameServer.Controllers
                     return null;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 return null;
@@ -292,7 +293,7 @@ namespace BasketballGameServer.Controllers
             {
                 bool updatePlayer = this.context.UpdatePlayer(player);
 
-                if(updatePlayer)
+                if (updatePlayer)
                 {
                     Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
                     //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
@@ -374,7 +375,7 @@ namespace BasketballGameServer.Controllers
         [HttpGet]
         public List<Team> GetTeams()
         {
-            List<Team> teams = context.Teams.Where(t => t.Players.Count() >= 3).ToList();
+            List<Team> teams = context.Teams.Include(t => t.Coach).Where(t => t.Players.Count() >= 3).ToList();
             return teams;
         }
         #endregion
