@@ -72,19 +72,18 @@ namespace BasketballGameServerBL.Models
 
                 entity.Property(e => e.AwayTeamId).HasColumnName("awayTeamId");
 
-                entity.Property(e => e.Date)
-                    .HasColumnType("datetime")
-                    .HasColumnName("date");
-
                 entity.Property(e => e.GameStatusId).HasColumnName("gameStatusId");
 
                 entity.Property(e => e.HomeTeamId).HasColumnName("homeTeamId");
 
+                entity.Property(e => e.Position)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("position");
+
                 entity.Property(e => e.ScoreAwayTeam).HasColumnName("scoreAwayTeam");
 
                 entity.Property(e => e.ScoreHomeTeam).HasColumnName("scoreHomeTeam");
-
-                entity.Property(e => e.Time).HasColumnName("time");
 
                 entity.HasOne(d => d.AwayTeam)
                     .WithMany(p => p.GameAwayTeams)
@@ -132,7 +131,9 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("GameStatus");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -172,9 +173,15 @@ namespace BasketballGameServerBL.Models
 
                 entity.Property(e => e.CoachId).HasColumnName("coachId");
 
+                entity.Property(e => e.Date)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date");
+
                 entity.Property(e => e.GameId).HasColumnName("gameId");
 
                 entity.Property(e => e.RequestStatusId).HasColumnName("requestStatusId");
+
+                entity.Property(e => e.Time).HasColumnName("time");
 
                 entity.HasOne(d => d.Coach)
                     .WithMany(p => p.RequestGames)
