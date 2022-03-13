@@ -57,7 +57,7 @@ CREATE TABLE "Coach"(
 ALTER TABLE
     "Coach" ADD CONSTRAINT "coach_id_primary" PRIMARY KEY("id");
 CREATE TABLE "RequestGameStatus"(
-    "id" INT NOT NULL,
+    "id" INT IDENTITY(1,1) NOT NULL,
     "name" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE

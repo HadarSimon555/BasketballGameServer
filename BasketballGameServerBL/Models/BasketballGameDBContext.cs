@@ -204,9 +204,7 @@ namespace BasketballGameServerBL.Models
             {
                 entity.ToTable("RequestGameStatus");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .IsRequired()

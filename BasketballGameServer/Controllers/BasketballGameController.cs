@@ -379,6 +379,56 @@ namespace BasketballGameServer.Controllers
             return teams;
         }
         #endregion
+
+        #region HasGame
+        [Route("HasGame")]
+        [HttpGet]
+        public bool HasGame([FromQuery] Team team, DateTime date)
+        {
+            bool hasGame = this.HasGame(team, date);
+
+            if (hasGame)
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+
+                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                return true;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+        #endregion
+
+        #region AddRequestToGame
+        [Route("AddRequestToGame")]
+        [HttpPost]
+        public bool AddRequestToGame([FromBody] RequestGame request)
+        {
+            //Check user name and password
+            if (request != null)
+            {
+                bool addRequest = this.context.AddRequestToGame(request);
+
+                if (addRequest)
+                {
+                    HttpContext.Session.SetObject("theUser", request);
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+        #endregion
     }
 }
 

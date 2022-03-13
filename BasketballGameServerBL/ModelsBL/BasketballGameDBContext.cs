@@ -130,5 +130,33 @@ namespace BasketballGameServerBL.Models
             }
         }
         #endregion
+
+        #region HasGame
+        public bool HasGame(Team team, DateTime date)
+        {
+            //Team t = Teams.Where(t => t == team).FirstOrDefault();
+            //return Games.Any(g => g.AwayTeam.)
+            return false;
+        }
+        #endregion
+
+        #region AddRequestToGame
+        public bool AddRequestToGame(RequestGame request)
+        {
+            try
+            {
+                request.RequestStatus = this.RequestGameStatuses.Where(r => r.Id == 3).FirstOrDefault();
+                this.RequestGames.Update(request);
+
+                this.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
     }
 }
