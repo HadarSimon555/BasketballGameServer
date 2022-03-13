@@ -383,9 +383,9 @@ namespace BasketballGameServer.Controllers
         #region HasGame
         [Route("HasGame")]
         [HttpGet]
-        public bool HasGame([FromQuery] Team team, DateTime date)
+        public bool HasGame([FromQuery] int teamId, DateTime date)
         {
-            bool hasGame = this.HasGame(team, date);
+            bool hasGame = this.HasGame(teamId, date);
 
             if (hasGame)
             {

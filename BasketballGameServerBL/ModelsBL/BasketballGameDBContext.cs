@@ -132,11 +132,10 @@ namespace BasketballGameServerBL.Models
         #endregion
 
         #region HasGame
-        public bool HasGame(Team team, DateTime date)
+        public bool HasGame(int teamId, DateTime date)
         {
-            //Team t = Teams.Where(t => t == team).FirstOrDefault();
-            //return Games.Any(g => g.AwayTeam.)
-            return false;
+            Team t = Teams.Where(t => t.Id == teamId).FirstOrDefault();
+            return Games.Any(g => (g.AwayTeam == t || g.HomeTeam == t) && g.Date == date);
         }
         #endregion
 
