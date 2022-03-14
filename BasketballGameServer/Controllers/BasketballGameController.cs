@@ -385,7 +385,7 @@ namespace BasketballGameServer.Controllers
         [HttpGet]
         public bool HasGame([FromQuery] int teamId, DateTime date)
         {
-            bool hasGame = this.HasGame(teamId, date);
+            bool hasGame = context.HasGame(teamId, date);
 
             if (hasGame)
             {
