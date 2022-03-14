@@ -72,13 +72,24 @@ namespace BasketballGameServerBL.Models
 
                 entity.Property(e => e.AwayTeamId).HasColumnName("awayTeamId");
 
+                entity.Property(e => e.Date)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date");
+
                 entity.Property(e => e.GameStatusId).HasColumnName("gameStatusId");
 
                 entity.Property(e => e.HomeTeamId).HasColumnName("homeTeamId");
 
+                entity.Property(e => e.Position)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("position");
+
                 entity.Property(e => e.ScoreAwayTeam).HasColumnName("scoreAwayTeam");
 
                 entity.Property(e => e.ScoreHomeTeam).HasColumnName("scoreHomeTeam");
+
+                entity.Property(e => e.Time).HasColumnName("time");
 
                 entity.HasOne(d => d.AwayTeam)
                     .WithMany(p => p.GameAwayTeams)
@@ -177,7 +188,7 @@ namespace BasketballGameServerBL.Models
                     .HasMaxLength(255)
                     .HasColumnName("position");
 
-                entity.Property(e => e.RequestStatusId).HasColumnName("requestStatusId");
+                entity.Property(e => e.RequestGameStatusId).HasColumnName("requestGameStatusId");
 
                 entity.Property(e => e.Time).HasColumnName("time");
 
@@ -193,11 +204,11 @@ namespace BasketballGameServerBL.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("requestgame_gameid_foreign");
 
-                entity.HasOne(d => d.RequestStatus)
+                entity.HasOne(d => d.RequestGameStatus)
                     .WithMany(p => p.RequestGames)
-                    .HasForeignKey(d => d.RequestStatusId)
+                    .HasForeignKey(d => d.RequestGameStatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("requestgame_requeststatusid_foreign");
+                    .HasConstraintName("requestgame_requestgamestatusid_foreign");
             });
 
             modelBuilder.Entity<RequestGameStatus>(entity =>

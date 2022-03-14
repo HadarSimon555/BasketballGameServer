@@ -144,7 +144,7 @@ namespace BasketballGameServerBL.Models
         {
             try
             {
-                request.RequestStatus = this.RequestGameStatuses.Where(r => r.Id == 3).FirstOrDefault();
+                request.RequestGameStatus = this.RequestGameStatuses.Where(r => r.Id == 3).FirstOrDefault();
                 this.RequestGames.Update(request);
 
                 this.SaveChanges();
