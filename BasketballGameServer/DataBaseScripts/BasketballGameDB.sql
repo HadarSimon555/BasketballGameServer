@@ -26,7 +26,10 @@ CREATE TABLE "Game"(
     "awayTeamId" INT NOT NULL,
     "gameStatusId" INT NOT NULL,
     "scoreAwayTeam" INT NOT NULL,
-    "scoreHomeTeam" INT NOT NULL
+    "scoreHomeTeam" INT NOT NULL,
+    "date" DATETIME NOT NULL,
+    "time" TIME NOT NULL,
+    "position" NVARCHAR(255) NOT NULL
 );
 ALTER TABLE
     "Game" ADD CONSTRAINT "game_id_primary" PRIMARY KEY("id");
@@ -40,7 +43,7 @@ ALTER TABLE
     "GameStats" ADD CONSTRAINT "gamestats_id_primary" PRIMARY KEY("id");
 CREATE TABLE "RequestGame"(
     "id" INT IDENTITY(1,1) NOT NULL,
-    "requestStatusId" INT NOT NULL,
+    "requestGameStatusId" INT NOT NULL,
     "coachId" INT NOT NULL,
     "gameId" INT NOT NULL,
     "date" DATETIME NOT NULL,
@@ -120,7 +123,7 @@ ALTER TABLE
 ALTER TABLE
     "Coach" ADD CONSTRAINT "coach_userid_foreign" FOREIGN KEY("userId") REFERENCES "User"("id");
 ALTER TABLE
-    "RequestGame" ADD CONSTRAINT "requestgame_requeststatusid_foreign" FOREIGN KEY("requestStatusId") REFERENCES "RequestGameStatus"("id");
+    "RequestGame" ADD CONSTRAINT "requestgame_requestgamestatusid_foreign" FOREIGN KEY("requestGameStatusId") REFERENCES "RequestGameStatus"("id");
 ALTER TABLE
     "Game" ADD CONSTRAINT "game_gamestatusid_foreign" FOREIGN KEY("gameStatusId") REFERENCES "GameStatus"("id");
 ALTER TABLE
