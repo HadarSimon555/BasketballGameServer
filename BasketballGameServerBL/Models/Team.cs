@@ -13,6 +13,7 @@ namespace BasketballGameServerBL.Models
             GameAwayTeams = new HashSet<Game>();
             GameHomeTeams = new HashSet<Game>();
             Players = new HashSet<Player>();
+            RequestGames = new HashSet<RequestGame>();
             RequestToJoinTeams = new HashSet<RequestToJoinTeam>();
         }
 
@@ -26,6 +27,7 @@ namespace BasketballGameServerBL.Models
         public virtual ICollection<Game> GameAwayTeams { get; set; }
         public virtual ICollection<Game> GameHomeTeams { get; set; }
         public virtual ICollection<Player> Players { get; set; }
+        public virtual ICollection<RequestGame> RequestGames { get; set; }
         public virtual ICollection<RequestToJoinTeam> RequestToJoinTeams { get; set; }
     }
 }

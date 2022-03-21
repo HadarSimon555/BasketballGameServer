@@ -175,7 +175,9 @@ namespace BasketballGameServerBL.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.CoachId).HasColumnName("coachId");
+                entity.Property(e => e.AwayTeamId).HasColumnName("awayTeamId");
+
+                entity.Property(e => e.CoachHomeTeamId).HasColumnName("coachHomeTeamId");
 
                 entity.Property(e => e.Date)
                     .HasColumnType("datetime")
@@ -192,11 +194,17 @@ namespace BasketballGameServerBL.Models
 
                 entity.Property(e => e.Time).HasColumnName("time");
 
-                entity.HasOne(d => d.Coach)
+                entity.HasOne(d => d.AwayTeam)
                     .WithMany(p => p.RequestGames)
-                    .HasForeignKey(d => d.CoachId)
+                    .HasForeignKey(d => d.AwayTeamId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("requestgame_coachid_foreign");
+                    .HasConstraintName("requestgame_awayteamid_foreign");
+
+                entity.HasOne(d => d.CoachHomeTeam)
+                    .WithMany(p => p.RequestGames)
+                    .HasForeignKey(d => d.CoachHomeTeamId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("requestgame_coachhometeamid_foreign");
 
                 entity.HasOne(d => d.Game)
                     .WithMany(p => p.RequestGames)

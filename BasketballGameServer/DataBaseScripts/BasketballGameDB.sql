@@ -44,11 +44,12 @@ ALTER TABLE
 CREATE TABLE "RequestGame"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "requestGameStatusId" INT NOT NULL,
-    "coachId" INT NOT NULL,
+    "coachHomeTeamId" INT NOT NULL,
     "gameId" INT NOT NULL,
     "date" DATETIME NOT NULL,
     "time" TIME NOT NULL,
-    "position" NVARCHAR(255) NOT NULL
+    "position" NVARCHAR(255) NOT NULL,
+    "awayTeamId" INT NOT NULL
 );
 ALTER TABLE
     "RequestGame" ADD CONSTRAINT "requestgame_id_primary" PRIMARY KEY("id");
@@ -117,7 +118,9 @@ ALTER TABLE
 ALTER TABLE
     "GameStats" ADD CONSTRAINT "gamestats_gameid_foreign" FOREIGN KEY("gameId") REFERENCES "Game"("id");
 ALTER TABLE
-    "RequestGame" ADD CONSTRAINT "requestgame_coachid_foreign" FOREIGN KEY("coachId") REFERENCES "Coach"("id");
+    "RequestGame" ADD CONSTRAINT "requestgame_awayteamid_foreign" FOREIGN KEY("awayTeamId") REFERENCES "Team"("id");
+ALTER TABLE
+    "RequestGame" ADD CONSTRAINT "requestgame_coachhometeamid_foreign" FOREIGN KEY("coachHomeTeamId") REFERENCES "Coach"("id");
 ALTER TABLE
     "Team" ADD CONSTRAINT "team_coachid_foreign" FOREIGN KEY("coachId") REFERENCES "Coach"("id");
 ALTER TABLE
