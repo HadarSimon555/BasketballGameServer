@@ -96,8 +96,8 @@ namespace BasketballGameServerBL.Models
         }
         #endregion
 
-        #region GetRequests
-        public List<RequestToJoinTeam> GetRequests(int coachId)
+        #region GetRequestsToJoinTeam
+        public List<RequestToJoinTeam> GetRequestsToJoinTeam(int coachId)
         {
             try
             {
@@ -154,6 +154,22 @@ namespace BasketballGameServerBL.Models
             {
                 Console.WriteLine(e.Message);
                 return false;
+            }
+        }
+        #endregion
+
+        #region GetRequestsGame
+        public List<RequestGame> GetRequestsGame(int teamId)
+        {
+            try
+            {
+                List<RequestGame> list = this.RequestGames.Where(r => r.AwayTeam.Id == teamId && r.RequestGameStatus.Id == 3).ToList();
+                return list;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
             }
         }
         #endregion

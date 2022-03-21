@@ -279,7 +279,7 @@ namespace BasketballGameServer.Controllers
         [HttpGet]
         public List<RequestToJoinTeam> GetRequestsToJoinTeam([FromQuery] int coachId)
         {
-            List<RequestToJoinTeam> requests = context.GetRequests(coachId);
+            List<RequestToJoinTeam> requests = context.GetRequestsToJoinTeam(coachId);
             return requests;
         }
         #endregion
@@ -427,6 +427,16 @@ namespace BasketballGameServer.Controllers
                 Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                 return false;
             }
+        }
+        #endregion
+
+        #region GetRequestsGame
+        [Route("GetRequestsGame")]
+        [HttpGet]
+        public List<RequestGame> GetRequestsGame([FromQuery] int teamId)
+        {
+            List<RequestGame> requests = context.GetRequestsGame(teamId);
+            return requests;
         }
         #endregion
     }
