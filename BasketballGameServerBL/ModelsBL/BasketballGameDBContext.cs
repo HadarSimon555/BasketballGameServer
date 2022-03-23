@@ -173,5 +173,24 @@ namespace BasketballGameServerBL.Models
             }
         }
         #endregion
+
+        #region UpdateCoach
+        public bool UpdateCoach(Coach coach)
+        {
+            if (coach.Team != null)
+                coach.RequestGames = null;
+            try
+            {
+                this.Coaches.Update(coach);
+                this.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
     }
 }

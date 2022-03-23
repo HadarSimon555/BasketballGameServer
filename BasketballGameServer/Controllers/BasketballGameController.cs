@@ -439,6 +439,36 @@ namespace BasketballGameServer.Controllers
             return requests;
         }
         #endregion
+
+        #region ApproveRequestToGame
+        [Route("ApproveRequestToGame")]
+        [HttpPost]
+        public bool ApproveRequestToGame([FromBody] Coach coach)
+        {
+            if (coach != null)
+            {
+                RequestGame request = coach.RequestGames.FirstOrDefault();
+                if (request != null)
+                    request.RequestGameStatus = context.RequestGameStatuses.Where(r => r.Id == 1).FirstOrDefault();
+                bool updateCoach = this.context.UpdateCoach(coach);
+
+                if (updateCoach)
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+
+        #endregion
     }
 }
 

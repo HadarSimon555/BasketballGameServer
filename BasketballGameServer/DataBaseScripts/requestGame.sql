@@ -24,9 +24,3 @@ INSERT INTO [dbo].[RequestGameStatus]
      VALUES
            ('no answer yet')
 GO
-
-
-
-
-
-

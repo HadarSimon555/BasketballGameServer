@@ -10,7 +10,7 @@ namespace BasketballGameServerBL.Models
         public int Id { get; set; }
         public int RequestGameStatusId { get; set; }
         public int CoachHomeTeamId { get; set; }
-        public int GameId { get; set; }
+        public int? GameId { get; set; }
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
         public string Position { get; set; }

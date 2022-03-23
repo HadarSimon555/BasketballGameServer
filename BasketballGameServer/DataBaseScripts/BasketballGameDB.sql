@@ -45,7 +45,7 @@ CREATE TABLE "RequestGame"(
     "id" INT IDENTITY(1,1) NOT NULL,
     "requestGameStatusId" INT NOT NULL,
     "coachHomeTeamId" INT NOT NULL,
-    "gameId" INT NOT NULL,
+    "gameId" INT NULL,
     "date" DATETIME NOT NULL,
     "time" TIME NOT NULL,
     "position" NVARCHAR(255) NOT NULL,
