@@ -373,9 +373,9 @@ namespace BasketballGameServer.Controllers
         #region GetTeams
         [Route("GetTeams")]
         [HttpGet]
-        public List<Team> GetTeams()
+        public List<Team> GetTeams()//לשנות
         {
-            List<Team> teams = context.Teams.Include(t => t.Coach).Where(t => t.Players.Count() >= 2).ToList();
+            List<Team> teams = context.Teams.Include(t => t.Coach).Where(t => t.Players.Count() >= 0).ToList();
             return teams;
         }
         #endregion
