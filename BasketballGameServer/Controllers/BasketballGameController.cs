@@ -8,6 +8,10 @@ using BasketballGameServerBL.Models;
 using System.IO;
 using BasketballGameServer.DTO;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace BasketballGameServer.Controllers
 {
@@ -435,8 +439,18 @@ namespace BasketballGameServer.Controllers
         [HttpGet]
         public List<RequestGame> GetRequestsGame([FromQuery] int teamId)
         {
-            List<RequestGame> requests = context.GetRequestsGame(teamId);
-            return requests;
+            try
+            {
+                List<RequestGame> requests = context.GetRequestsGame(teamId);
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                
+                return requests;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.InnerException.Message);
+                return null;
+            }
         }
         #endregion
 
