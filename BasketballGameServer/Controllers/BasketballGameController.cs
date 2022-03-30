@@ -460,7 +460,7 @@ namespace BasketballGameServer.Controllers
         {
             if (request != null)
             {
-                request.RequestGameStatus = context.RequestGameStatuses.Where(r => r.Id == 1).FirstOrDefault();
+               
 
                 Game game = new Game()
                 {
@@ -473,11 +473,19 @@ namespace BasketballGameServer.Controllers
                     Time = request.Time,
                     Position = request.Position
                 };
+                try
+                {
+                    Game newGame = AddGame(game);
+                    request.RequestGameStatus = context.RequestGameStatuses.Where(r => r.Id == 1).FirstOrDefault();
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
 
-                Game newGame = AddGame(game);
 
-
-                //bool updateCoach = this.context.UpdateCoach(request.AwayTeam.Coach);
+                //bool updateCoach = this.context.UpdateCoach(request.CoachHomeTeam);
 
                 //if (updateCoach)
                 //{

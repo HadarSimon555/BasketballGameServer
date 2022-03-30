@@ -163,7 +163,7 @@ namespace BasketballGameServerBL.Models
         {
             try
             {
-                List<RequestGame> list = this.RequestGames.Where(r => r.AwayTeam.Id == teamId && r.RequestGameStatus.Id == 3).Include(r=>r.AwayTeam.Coach.User).Include(r=>r.CoachHomeTeam.Team.Coach.User).Include(r=>r.AwayTeam.Coach.Team.Coach).Include(r=>r.RequestGameStatus).ToList();
+                List<RequestGame> list = this.RequestGames.Where(r => (r.AwayTeam.Id == teamId||r.CoachHomeTeam.TeamId==teamId) && r.RequestGameStatus.Id == 3).Include(r=>r.AwayTeam.Coach.User).Include(r=>r.CoachHomeTeam.Team.Coach.User).Include(r=>r.AwayTeam.Coach.Team.Coach).Include(r=>r.RequestGameStatus).ToList();
                 return list;
             }
             catch (Exception e)
