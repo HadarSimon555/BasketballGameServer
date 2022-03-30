@@ -208,7 +208,6 @@ namespace BasketballGameServer.Controllers
         [HttpPost]
         public Team AddTeam([FromBody] Team team)
         {
-            //Check user name and password
             if (team != null)
             {
                 bool addTeam = this.context.AddTeam(team);
@@ -443,7 +442,7 @@ namespace BasketballGameServer.Controllers
             {
                 List<RequestGame> requests = context.GetRequestsGame(teamId);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                
+
                 return requests;
             }
             catch (Exception e)
@@ -457,23 +456,37 @@ namespace BasketballGameServer.Controllers
         #region ApproveRequestToGame
         [Route("ApproveRequestToGame")]
         [HttpPost]
-        public bool ApproveRequestToGame([FromBody] Coach coach)
+        public bool ApproveRequestToGame([FromBody] RequestGame request)
         {
-            if (coach != null)
+            if (request != null)
             {
-                RequestGame request = coach.RequestGames.FirstOrDefault();
-                if (request != null)
-                    request.RequestGameStatus = context.RequestGameStatuses.Where(r => r.Id == 1).FirstOrDefault();
-                bool updateCoach = this.context.UpdateCoach(coach);
+                request.RequestGameStatus = context.RequestGameStatuses.Where(r => r.Id == 1).FirstOrDefault();
 
-                if (updateCoach)
+                Game game = new Game()
                 {
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                    return true;
-                }
-                else
-                    return false;
+                    HomeTeam = request.CoachHomeTeam.Team,
+                    AwayTeam = request.AwayTeam,
+                    //GameStatus = ,
+                    ScoreAwayTeam = 0,
+                    ScoreHomeTeam = 0,
+                    Date = request.Date,
+                    Time = request.Time,
+                    Position = request.Position
+                };
+
+                Game newGame = AddGame(game);
+
+
+                //bool updateCoach = this.context.UpdateCoach(request.AwayTeam.Coach);
+
+                //if (updateCoach)
+                //{
+                //    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                //    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                //    return true;
+                //}
+                //else
+                //    return false;
             }
             else
             {
@@ -482,6 +495,33 @@ namespace BasketballGameServer.Controllers
             }
         }
 
+        #endregion
+
+        #region AddGame
+        [Route("AddGame")]
+        [HttpPost]
+        public Game AddGame([FromBody] Game game)
+        {
+            if (game != null)
+            {
+                bool addGame = this.context.AddGame(game);
+
+                if (addGame)
+                {
+                    HttpContext.Session.SetObject("theUser", game);
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                    return game;
+                }
+                else
+                    return null;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return null;
+            }
+        }
         #endregion
     }
 }

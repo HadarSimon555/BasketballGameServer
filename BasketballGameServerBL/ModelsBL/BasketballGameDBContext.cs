@@ -192,5 +192,22 @@ namespace BasketballGameServerBL.Models
             }
         }
         #endregion
+
+        #region AddGame
+        public bool AddGame(Game game)
+        {
+            try
+            {
+                this.Games.Update(game);
+                this.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
     }
 }
