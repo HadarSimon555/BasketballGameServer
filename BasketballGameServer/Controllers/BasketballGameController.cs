@@ -182,7 +182,7 @@ namespace BasketballGameServer.Controllers
         [HttpGet]
         public List<Game> GetGames(string myTeam)
         {
-            return context.Games.ToList();
+            return context.Games.Where(g => g.GameStatusId == 3).Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
         }
         #endregion
 
