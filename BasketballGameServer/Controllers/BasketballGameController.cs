@@ -458,15 +458,14 @@ namespace BasketballGameServer.Controllers
         [HttpPost]
         public bool ApproveRequestToGame([FromBody] RequestGame request)
         {
+            //RequestGame rq = context.RequestGames.Find(request.Id);
             if (request != null)
             {
-               
-
                 Game game = new Game()
                 {
-                    HomeTeam = request.CoachHomeTeam.Team,
-                    AwayTeam = request.AwayTeam,
-                    //GameStatus = ,
+                    HomeTeamId = request.CoachHomeTeam.Team.Id,
+                    AwayTeamId = request.AwayTeamId,
+                    GameStatus = context.GameStatuses.Where(r => r.Id == 1).FirstOrDefault(),
                     ScoreAwayTeam = 0,
                     ScoreHomeTeam = 0,
                     Date = request.Date,
@@ -475,12 +474,25 @@ namespace BasketballGameServer.Controllers
                 };
                 try
                 {
-                    Game newGame = AddGame(game);
-                    request.RequestGameStatus = context.RequestGameStatuses.Where(r => r.Id == 1).FirstOrDefault();
-                    return true;
+                    bool success = context.AddGame(game);
+                    
+                    if (success)
+                    {
+                        RequestGame rq = context.RequestGames.Where(r => r.Id == request.Id).Include(r => r.RequestGameStatus).FirstOrDefault();
+                        rq.RequestGameStatus = context.RequestGameStatuses.Where(r => r.Id == 1).FirstOrDefault();
+                        rq.RequestGameStatusId = rq.RequestGameStatus.Id;
+                        context.Entry(rq).State = EntityState.Modified;
+                        context.SaveChanges();
+
+                        return true;
+                    }
+                    else
+                        return false;
+
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(e.Message);
                     return false;
                 }
 
@@ -495,6 +507,42 @@ namespace BasketballGameServer.Controllers
                 //}
                 //else
                 //    return false;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region DeleteRequestToGame
+        [Route("DeleteRequestToGame")]
+        [HttpPost]
+        public bool DeleteRequestToGame([FromBody] RequestGame request)
+        {
+            if (request != null)
+            {
+                RequestGame rq = context.RequestGames.Where(r => r.Id == request.Id).Include(r => r.RequestGameStatus).FirstOrDefault();
+
+                rq.RequestGameStatus = context.RequestGameStatuses.Where(r => r.Id == 2).FirstOrDefault();
+                rq.RequestGameStatusId = rq.RequestGameStatus.Id;
+                context.Entry(rq).State = EntityState.Modified;
+                //context.RequestGames.Update(request);
+                try
+                {
+                    context.SaveChanges();
+
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                    return false;
+                }
             }
             else
             {

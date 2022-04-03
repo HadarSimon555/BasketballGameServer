@@ -24,5 +24,3 @@ INSERT INTO [dbo].[GameStatus]
      VALUES
            ('finish')
 GO
-
-
