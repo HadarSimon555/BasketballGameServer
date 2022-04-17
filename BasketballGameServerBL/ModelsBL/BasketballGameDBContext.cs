@@ -14,7 +14,7 @@ namespace BasketballGameServerBL.Models
         // פעולת התחברות, אם ההתחברות לא הצליחה מחזיר null
         public User Login(string email, string pass)
         {
-            return this.Users.Include(u => u.Players).ThenInclude(u => u.Team).Include(u => u.Coaches).ThenInclude(u => u.Team.Players).ThenInclude(c=>c.RequestToJoinTeams).Where(u => u.Email == email && u.Pass == pass).FirstOrDefault();
+            return this.Users.Include(u => u.Players).ThenInclude(u => u.Team).Include(u => u.Coaches).ThenInclude(u => u.Team.Players).ThenInclude(c => c.RequestToJoinTeams).Where(u => u.Email == email && u.Pass == pass).FirstOrDefault();
         }
         #endregion
 
@@ -84,7 +84,7 @@ namespace BasketballGameServerBL.Models
             {
                 request.RequestToJoinTeamStatus = this.RequestToJoinTeamStatuses.Where(r => r.Id == 3).FirstOrDefault();
                 this.RequestToJoinTeams.Update(request);
-               
+
                 this.SaveChanges();
                 return true;
             }
@@ -101,7 +101,7 @@ namespace BasketballGameServerBL.Models
         {
             try
             {
-                List<RequestToJoinTeam> list = this.RequestToJoinTeams.Include(r => r.Player).ThenInclude(p => p.User).Include(r => r.Team).ThenInclude(c => c.Coach).Include(r=>r.RequestToJoinTeamStatus).Where(c => c.Team.CoachId == coachId && c.RequestToJoinTeamStatus.Id == 3).ToList();
+                List<RequestToJoinTeam> list = this.RequestToJoinTeams.Include(r => r.Player).ThenInclude(p => p.User).Include(r => r.Team).ThenInclude(c => c.Coach).Include(r => r.RequestToJoinTeamStatus).Where(c => c.Team.CoachId == coachId && c.RequestToJoinTeamStatus.Id == 3).ToList();
                 return list;
             }
             catch (Exception e)
@@ -135,7 +135,7 @@ namespace BasketballGameServerBL.Models
         public bool HasGame(int teamId, DateTime date)
         {
             Team t = Teams.Where(t => t.Id == teamId).FirstOrDefault();
-            return Games.Any(g => (g.AwayTeam == t || g.HomeTeam == t) && g.Date == date);
+            return Games.Any(g => (g.AwayTeam == t || g.HomeTeam == t) && g.Date == date) || RequestGames.Any(r => (r.AwayTeam == t || r.CoachHomeTeam.Team == t) && r.Date == date);
         }
         #endregion
 
@@ -163,7 +163,7 @@ namespace BasketballGameServerBL.Models
         {
             try
             {
-                List<RequestGame> list = this.RequestGames.Where(r => (r.AwayTeam.Id == teamId||r.CoachHomeTeam.TeamId==teamId) && r.RequestGameStatus.Id == 3).Include(r=>r.AwayTeam.Coach.User).Include(r=>r.CoachHomeTeam.Team.Coach.User).Include(r=>r.AwayTeam.Coach.Team.Coach).Include(r=>r.RequestGameStatus).ToList();
+                List<RequestGame> list = this.RequestGames.Where(r => (r.AwayTeam.Id == teamId || r.CoachHomeTeam.TeamId == teamId) && r.RequestGameStatus.Id == 3).Include(r => r.AwayTeam.Coach.User).Include(r => r.CoachHomeTeam.Team.Coach.User).Include(r => r.AwayTeam.Coach.Team.Coach).Include(r => r.RequestGameStatus).ToList();
                 return list;
             }
             catch (Exception e)
