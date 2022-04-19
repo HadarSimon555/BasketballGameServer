@@ -579,6 +579,16 @@ namespace BasketballGameServer.Controllers
             }
         }
         #endregion
+
+        #region GetMyRequestToJoinTeam
+        [Route("GetMyRequestToJoinTeam")]
+        [HttpGet]
+        public RequestToJoinTeam GetMyRequestToJoinTeam([FromQuery] int playerId)
+        {
+            RequestToJoinTeam request = context.GetMyRequestToJoinTeam(playerId);
+            return request;
+        }
+        #endregion
     }
 }
 

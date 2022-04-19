@@ -209,5 +209,21 @@ namespace BasketballGameServerBL.Models
             }
         }
         #endregion
+
+        #region GetMyRequestToJoinTeam
+        public RequestToJoinTeam GetMyRequestToJoinTeam(int playerId)
+        {
+            try
+            {
+                RequestToJoinTeam request = this.RequestToJoinTeams.Include(r => r.Player).ThenInclude(p => p.User).Include(r => r.Team).ThenInclude(c => c.Coach).Include(r => r.RequestToJoinTeamStatus).Where(p => p.PlayerId == playerId && p.RequestToJoinTeamStatus.Id == 3).FirstOrDefault();
+                return request;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        #endregion
     }
 }
