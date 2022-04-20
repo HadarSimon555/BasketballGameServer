@@ -180,9 +180,11 @@ namespace BasketballGameServer.Controllers
         #region GetGames
         [Route("GetGames")]
         [HttpGet]
-        public List<Game> GetGames(string myTeam)
+        public List<Game> GetGames(int teamId)
         {
-            return context.Games.Where(g => g.GameStatusId == 3).Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
+            if(teamId != -1)
+                return context.Games.Where(g => (g.HomeTeamId == teamId) || (g.AwayTeamId == teamId)).Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
+            return context.Games.Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
         }
         #endregion
 

@@ -5,15 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="DataBaseScripts\wwwroot\images\0.jpg" />
+    <Content Include="DataBaseScripts\wwwroot\images\1.jpg" />
+    <Content Include="DataBaseScripts\wwwroot\images\2.jpg" />
+    <Content Include="DataBaseScripts\wwwroot\images\3.jpg" />
+    <Content Include="DataBaseScripts\wwwroot\images\4.jpg" />
+    <Content Include="DataBaseScripts\wwwroot\images\5.jpg" />
+    <Content Include="DataBaseScripts\wwwroot\images\6.jpg" />
+    <Content Include="DataBaseScripts\wwwroot\images\7.jpg" />
+    <Content Include="DataBaseScripts\wwwroot\images\8.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BasketballGameServerBL\BasketballGameServerBL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>
