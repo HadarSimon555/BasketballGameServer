@@ -180,11 +180,38 @@ namespace BasketballGameServer.Controllers
         #region GetGames
         [Route("GetGames")]
         [HttpGet]
-        public List<Game> GetGames(int teamId, int gameStatusId)
+        public List<Game> GetGames(int teamId)
         {
             if(teamId != -1)
-                return context.Games.Where(g => (g.HomeTeamId == teamId) || (g.AwayTeamId == teamId) && g.GameStatusId == gameStatusId).Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
-            return context.Games.Where(g => g.GameStatusId == gameStatusId).Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
+                return context.Games.Where(g => (g.HomeTeamId == teamId) || (g.AwayTeamId == teamId)).Include(g => g.AwayTeam).Include(g => g.HomeTeam).Include(g => g.GameStatusId).ToList();
+            return context.Games.Include(g => g.AwayTeam).Include(g => g.HomeTeam).Include(g => g.GameStatusId).ToList();
+        }
+        #endregion
+
+        #region UpdateGamesStatuses
+        [Route("UpdateGamesStatuses")]
+        [HttpPost]
+        public bool UpdateGamesStatuses()
+        {
+            List<Game> games = context.Games.Include(g => g.GameStatus).ToList();
+            if (games != null)
+            {
+                bool updateGamesStatuses = this.context.UpdateGamesStatuses();
+
+                if (updateGamesStatuses)
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
+            }
         }
         #endregion
 

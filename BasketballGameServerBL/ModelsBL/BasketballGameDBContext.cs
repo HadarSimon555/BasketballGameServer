@@ -225,5 +225,46 @@ namespace BasketballGameServerBL.Models
             }
         }
         #endregion
+
+        #region UpdateGamesStatuses
+        public bool UpdateGamesStatuses()
+        {
+            try
+            {
+                // לעדכן את הסטטוסים לפי תאריך
+                List<Game> games = this.Games.ToList();
+                foreach (Game g in games)
+                {
+                    // אם התאריך בעבר
+                    if (g.Date.Year < DateTime.Today.Year)
+                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
+                    // אם התאריך בעתיד
+                    if (g.Date.Year > DateTime.Today.Year)
+                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
+                    // אם התאריך בעבר
+                    if (g.Date.Month < DateTime.Today.Month)
+                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
+                    // אם התאריך בעתיד
+                    if (g.Date.Month > DateTime.Today.Month)
+                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
+                    // אם התאריך בעבר
+                    if (g.Date.Day < DateTime.Today.Day)
+                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
+                    // אם התאריך בעתיד
+                    if (g.Date.Day > DateTime.Today.Day)
+                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
+                    // אם הגיע לפה סימן שהתאריך היום
+                    g.GameStatus = this.GameStatuses.Where(s => s.Id == 2).FirstOrDefault();
+                }
+                this.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
     }
 }
