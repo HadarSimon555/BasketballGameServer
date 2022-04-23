@@ -182,9 +182,14 @@ namespace BasketballGameServer.Controllers
         [HttpGet]
         public List<Game> GetGames(int teamId)
         {
-            if(teamId != -1)
-                return context.Games.Where(g => (g.HomeTeamId == teamId) || (g.AwayTeamId == teamId)).Include(g => g.AwayTeam).Include(g => g.HomeTeam).Include(g => g.GameStatusId).ToList();
-            return context.Games.Include(g => g.AwayTeam).Include(g => g.HomeTeam).Include(g => g.GameStatusId).ToList();
+            bool update = UpdateGamesStatuses();
+            if (update)
+            {
+                if (teamId != -1)
+                    return context.Games.Where(g => (g.HomeTeamId == teamId) || (g.AwayTeamId == teamId)).Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
+                return context.Games.Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
+            }
+            return null;
         }
         #endregion
 
@@ -495,8 +500,8 @@ namespace BasketballGameServer.Controllers
                     HomeTeamId = request.CoachHomeTeam.Team.Id,
                     AwayTeamId = request.AwayTeamId,
                     GameStatus = context.GameStatuses.Where(r => r.Id == 1).FirstOrDefault(),
-                    ScoreAwayTeam = 0,
-                    ScoreHomeTeam = 0,
+                    ScoreAwayTeam = -1,
+                    ScoreHomeTeam = -1,
                     Date = request.Date,
                     Time = request.Time,
                     Position = request.Position
@@ -504,7 +509,7 @@ namespace BasketballGameServer.Controllers
                 try
                 {
                     bool success = context.AddGame(game);
-                    
+
                     if (success)
                     {
                         RequestGame rq = context.RequestGames.Where(r => r.Id == request.Id).Include(r => r.RequestGameStatus).FirstOrDefault();

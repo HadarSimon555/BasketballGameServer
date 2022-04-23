@@ -237,24 +237,25 @@ namespace BasketballGameServerBL.Models
                 {
                     // אם התאריך בעבר
                     if (g.Date.Year < DateTime.Today.Year)
-                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
+                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
                     // אם התאריך בעתיד
                     if (g.Date.Year > DateTime.Today.Year)
-                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
+                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
                     // אם התאריך בעבר
                     if (g.Date.Month < DateTime.Today.Month)
-                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
+                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
                     // אם התאריך בעתיד
                     if (g.Date.Month > DateTime.Today.Month)
-                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
+                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
                     // אם התאריך בעבר
                     if (g.Date.Day < DateTime.Today.Day)
-                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
+                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
                     // אם התאריך בעתיד
                     if (g.Date.Day > DateTime.Today.Day)
-                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
-                    // אם הגיע לפה סימן שהתאריך היום
-                    g.GameStatus = this.GameStatuses.Where(s => s.Id == 2).FirstOrDefault();
+                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
+                    // אם התאריך היום
+                    if (g.Date == DateTime.Today)
+                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 2).FirstOrDefault();
                 }
                 this.SaveChanges();
                 return true;
