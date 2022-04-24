@@ -198,6 +198,16 @@ namespace BasketballGameServerBL.Models
         {
             try
             {
+                Team awayTeam = game.AwayTeam;
+                foreach(Player p in awayTeam.Players)
+                {
+                    this.GameStats.Add(new GameStat() { PlayerId = p.Id, GameId = game.Id, PlayerShots = -1 });
+                }
+                Team homeTeam = game.HomeTeam;
+                foreach (Player p in homeTeam.Players)
+                {
+                    this.GameStats.Add(new GameStat() { PlayerId = p.Id, GameId = game.Id, PlayerShots = -1 });
+                }
                 this.Games.Update(game);
                 this.SaveChanges();
                 return true;

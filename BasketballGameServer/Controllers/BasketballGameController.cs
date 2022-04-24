@@ -631,7 +631,24 @@ namespace BasketballGameServer.Controllers
         {
             try
             {
-                List<Player> list = context.Players.Where(x => x.UserId == userId).ToList();
+                List<Player> list = context.Players.Where(x => x.UserId == userId).Include(x => x.GameStats).ToList();
+                return list;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        #endregion
+
+        #region GetGameStats
+        [Route("GetGameStats")]
+        [HttpGet]
+        public List<GameStat> GetGameStats([FromQuery] int userId)
+        {
+            try
+            {
+                List<GameStat> list = context.GameStats.Where(x => x. == userId).Include(x => x.Player).ToList();
                 return list;
             }
             catch
