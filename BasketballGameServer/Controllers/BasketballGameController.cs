@@ -623,6 +623,23 @@ namespace BasketballGameServer.Controllers
             return request;
         }
         #endregion
+
+        #region GetPlayers
+        [Route("GetPlayers")]
+        [HttpGet]
+        public List<Player> GetPlayers([FromQuery] int userId)
+        {
+            try
+            {
+                List<Player> list = context.Players.Where(x => x.UserId == userId).ToList();
+                return list;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        #endregion
     }
 }
 
