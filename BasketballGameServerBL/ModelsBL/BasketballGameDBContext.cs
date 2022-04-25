@@ -277,5 +277,25 @@ namespace BasketballGameServerBL.Models
             }
         }
         #endregion
+
+        #region SaveGameStats
+        public bool SaveGameStats(List<GameStat> listGameStats)
+        {
+            try
+            {
+                foreach (GameStat gameStat in listGameStats)
+                {
+                    this.GameStats.Update(gameStat);
+                }
+                this.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        #endregion
     }
 }

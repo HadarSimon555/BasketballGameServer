@@ -644,16 +644,41 @@ namespace BasketballGameServer.Controllers
         #region GetGameStats
         [Route("GetGameStats")]
         [HttpGet]
-        public List<GameStat> GetGameStats([FromQuery] int userId)
+        public List<GameStat> GetGameStats([FromQuery] int gameId,  int teamId)
         {
             try
             {
-                List<GameStat> list = context.GameStats.Where(x => x. == userId).Include(x => x.Player).ToList();
+                List<GameStat> list = context.GameStats.Where(x => x.GameId == gameId && x.Player.TeamId == teamId).ToList();
                 return list;
             }
             catch
             {
                 return null;
+            }
+        }
+        #endregion
+
+        #region SaveGameStats
+        [Route("SaveGameStats")]
+        [HttpPost]
+        public bool SaveGameStats([FromBody] List<GameStat> listGameStats)
+        {
+            if(listGameStats != null)
+            {
+                bool saveGameStats = this.context.SaveGameStats(listGameStats);
+                if (saveGameStats)
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                return false;
             }
         }
         #endregion
