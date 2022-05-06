@@ -199,7 +199,7 @@ namespace BasketballGameServerBL.Models
             try
             {
                 Team awayTeam = game.AwayTeam;
-                foreach(Player p in awayTeam.Players)
+                foreach (Player p in awayTeam.Players)
                 {
                     this.GameStats.Add(new GameStat() { PlayerId = p.Id, GameId = game.Id, PlayerShots = -1 });
                 }

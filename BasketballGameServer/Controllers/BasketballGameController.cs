@@ -631,8 +631,16 @@ namespace BasketballGameServer.Controllers
         {
             try
             {
-                List<Player> list = context.Players.Where(x => x.UserId == userId).Include(x => x.GameStats).ToList();
-                return list;
+                if (userId != -1)
+                {
+                    List<Player> list = context.Players.Where(x => x.UserId == userId).Include(x => x.GameStats).ToList();
+                    return list;
+                }
+                else
+                {
+                    List<Player> list = context.Players.Include(x => x.GameStats).ToList();
+                    return list;
+                }
             }
             catch
             {
@@ -644,7 +652,7 @@ namespace BasketballGameServer.Controllers
         #region GetGameStats
         [Route("GetGameStats")]
         [HttpGet]
-        public List<GameStat> GetGameStats([FromQuery] int gameId,  int teamId)
+        public List<GameStat> GetGameStats([FromQuery] int gameId, int teamId)
         {
             try
             {
@@ -663,7 +671,7 @@ namespace BasketballGameServer.Controllers
         [HttpPost]
         public bool SaveGameStats([FromBody] List<GameStat> listGameStats)
         {
-            if(listGameStats != null)
+            if (listGameStats != null)
             {
                 bool saveGameStats = this.context.SaveGameStats(listGameStats);
                 if (saveGameStats)
