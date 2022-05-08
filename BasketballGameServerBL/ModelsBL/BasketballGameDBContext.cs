@@ -163,7 +163,7 @@ namespace BasketballGameServerBL.Models
         {
             try
             {
-                List<RequestGame> list = this.RequestGames.Where(r => (r.AwayTeam.Id == teamId || r.CoachHomeTeam.TeamId == teamId) && r.RequestGameStatus.Id == 3).Include(r => r.AwayTeam.Coach.User).Include(r => r.CoachHomeTeam.Team.Coach.User).Include(r => r.AwayTeam.Coach.Team.Coach).Include(r => r.RequestGameStatus).ToList();
+                List<RequestGame> list = this.RequestGames.Where(r => (r.AwayTeam.Id == teamId || r.CoachHomeTeam.TeamId == teamId) && r.RequestGameStatus.Id == 3).Include(r => r.AwayTeam.Coach.User).Include(r => r.CoachHomeTeam.Team.Coach.User).Include(r => r.AwayTeam.Coach.Team.Coach).Include(r => r.RequestGameStatus).Include(r=>r.AwayTeam.Players).Include(r=>r.CoachHomeTeam.Team.Players).ToList();
                 return list;
             }
             catch (Exception e)
@@ -264,7 +264,7 @@ namespace BasketballGameServerBL.Models
                     if (g.Date.Day > DateTime.Today.Day)
                         g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
                     // אם התאריך היום
-                    if (g.Date == DateTime.Today)
+                    else
                         g.GameStatus = this.GameStatuses.Where(s => s.Id == 2).FirstOrDefault();
                 }
                 this.SaveChanges();

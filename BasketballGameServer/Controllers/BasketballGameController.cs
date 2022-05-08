@@ -497,8 +497,8 @@ namespace BasketballGameServer.Controllers
             {
                 Game game = new Game()
                 {
-                    HomeTeamId = request.CoachHomeTeam.Team.Id,
-                    AwayTeamId = request.AwayTeamId,
+                    HomeTeam = request.CoachHomeTeam.Team,
+                    AwayTeam = request.AwayTeam,
                     GameStatus = context.GameStatuses.Where(r => r.Id == 1).FirstOrDefault(),
                     ScoreAwayTeam = -1,
                     ScoreHomeTeam = -1,
@@ -687,6 +687,45 @@ namespace BasketballGameServer.Controllers
             {
                 Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                 return false;
+            }
+        }
+        #endregion
+
+        #region GetPlayersRanking
+        [Route("GetPlayersRanking")]
+        [HttpGet]
+        public IDictionary<Player, double> GetPlayersRanking()
+        {
+            try
+            {
+                List<GameStat> list = context.GameStats.ToList();
+                if (list == null)
+                    return null;
+
+                IDictionary<Player, double> playersRanking = new Dictionary<Player, double>();
+
+                foreach (GameStat g in list)
+                {
+                    int count = 0;
+                    int sum = 0;
+                    foreach (GameStat g1 in list)
+                    {
+                        if (g1.PlayerId == g.PlayerId && g1.PlayerShots != -1)
+                        {
+                            count++;
+                            sum += g1.PlayerShots;
+                            list.Remove(g1);
+                        }
+                    }
+                    playersRanking.Add(g.Player, (double)sum / count);
+                }
+                playersRanking.OrderBy(p => p.Value);
+
+                return playersRanking;
+            }
+            catch
+            {
+                return null;
             }
         }
         #endregion
