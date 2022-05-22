@@ -201,14 +201,21 @@ namespace BasketballGameServerBL.Models
                 Team awayTeam = game.AwayTeam;
                 foreach (Player p in awayTeam.Players)
                 {
-                    this.GameStats.Add(new GameStat() { PlayerId = p.Id, GameId = game.Id, PlayerShots = -1 });
+                    GameStat g=  new GameStat() { PlayerId = p.Id, Game=game, PlayerShots = -1 };
+                    this.Entry(g).State = EntityState.Added;
+                    //this.GameStats.Add(new GameStat() { PlayerId = p.Id, GameId = game.Id, PlayerShots = -1 });
                 }
                 Team homeTeam = game.HomeTeam;
                 foreach (Player p in homeTeam.Players)
                 {
-                    this.GameStats.Add(new GameStat() { PlayerId = p.Id, GameId = game.Id, PlayerShots = -1 });
+                    GameStat g = new GameStat() { PlayerId = p.Id, Game = game, PlayerShots = -1 };
+                    this.Entry(g).State = EntityState.Added;
+                    //this.GameStats.Add(new GameStat() { PlayerId = p.Id, GameId = game.Id, PlayerShots = -1 });
                 }
-                this.Games.Update(game);
+                // this.Games.Update(game);
+                this.Entry(game).State = EntityState.Added;
+                this.Entry(awayTeam).State = EntityState.Unchanged;
+                this.Entry(homeTeam).State = EntityState.Unchanged;
                 this.SaveChanges();
                 return true;
             }
