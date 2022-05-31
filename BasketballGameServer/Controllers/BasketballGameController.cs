@@ -420,11 +420,11 @@ namespace BasketballGameServer.Controllers
         #region HasGame
         [Route("HasGame")]
         [HttpGet]
-        public bool HasGame([FromQuery] int teamId, DateTime date)
+        public bool HasGame([FromQuery] int teamId1, int teamId2, DateTime date)
         {
-            bool hasGame = context.HasGame(teamId, date);
-
-            if (hasGame)
+            bool hasGame1 = context.HasGame(teamId1, date);
+            bool hasGame2 = context.HasGame(teamId2, date);
+            if (hasGame1 && hasGame2)
             {
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
 
