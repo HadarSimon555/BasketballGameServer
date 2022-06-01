@@ -715,7 +715,7 @@ namespace BasketballGameServer.Controllers
                     Player = cl.First().Player,
                     Games = cl.Count(),
                     TotalScore = cl.Sum(s=>s.PlayerShots)
-                }).ToList<PlayerStatistics>().OrderBy(s=>((double)(s.TotalScore))/s.Games).ToList() ;
+                }).ToList<PlayerStatistics>().OrderByDescending(s=>((double)(s.TotalScore))/s.Games).ToList() ;
                 return result;
     //            Lines
     //.GroupBy(l => l.ProductCode)
