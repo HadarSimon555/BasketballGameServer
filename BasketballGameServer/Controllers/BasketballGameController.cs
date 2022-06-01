@@ -424,7 +424,7 @@ namespace BasketballGameServer.Controllers
         {
             bool hasGame1 = context.HasGame(teamId1, date);
             bool hasGame2 = context.HasGame(teamId2, date);
-            if (hasGame1 && hasGame2)
+            if (hasGame1 || hasGame2)
             {
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
 
@@ -433,7 +433,7 @@ namespace BasketballGameServer.Controllers
             }
             else
             {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
                 return false;
             }
         }
@@ -694,36 +694,59 @@ namespace BasketballGameServer.Controllers
         #region GetPlayersRanking
         [Route("GetPlayersRanking")]
         [HttpGet]
-        public IDictionary<Player, double> GetPlayersRanking()
+        public List<PlayerStatistics> GetPlayersRanking()
         {
             try
             {
-                List<GameStat> list = context.GameStats.ToList();
+                //שליפת כל נתוני המשחקים
+                List<GameStat> list = context.GameStats.Include(g=>g.Player.Team).ToList();
+                List<PlayerStatistics> result;
+                //אם הרשימה ריקה 
                 if (list == null)
                     return null;
 
-                IDictionary<Player, double> playersRanking = new Dictionary<Player, double>();
-
-                foreach (GameStat g in list)
+                //קבץ את הנתונים לפי מזהה השחקן
+                //עבור כל קבוצה- צור רשומת סטטיסטיקת שחקן שהערכים שלה הם
+                //שחקן   - השחקן של קבוצת הערכים
+                //Games- כמות הרשומות בקבוצת הערכים
+                //Sum - סכום לפי קובצת הערכים לפי שדה playershots
+                result = list.GroupBy(p => p.Player.Id).Select(cl => new PlayerStatistics
                 {
-                    int count = 0;
-                    int sum = 0;
-                    foreach (GameStat g1 in list)
-                    {
-                        if (g1.PlayerId == g.PlayerId && g1.PlayerShots != -1)
-                        {
-                            count++;
-                            sum += g1.PlayerShots;
-                            list.Remove(g1);
-                        }
-                    }
-                    playersRanking.Add(g.Player, (double)sum / count);
-                }
-                playersRanking.OrderBy(p => p.Value);
+                    Player = cl.First().Player,
+                    Games = cl.Count(),
+                    TotalScore = cl.Sum(s=>s.PlayerShots)
+                }).ToList<PlayerStatistics>().OrderBy(s=>((double)(s.TotalScore))/s.Games).ToList() ;
+                return result;
+    //            Lines
+    //.GroupBy(l => l.ProductCode)
+    //.Select(cl => new ResultLine
+    //{
+    //    ProductName = cl.First().Name,
+    //    Quantity = cl.Count().ToString(),
+    //    Price = cl.Sum(c => c.Price).ToString(),
 
-                return playersRanking;
-            }
-            catch
+        //IDictionary<Player, double> playersRanking = new Dictionary<Player, double>();
+
+        //foreach (GameStat g in list)
+        //{
+        //    int count = 0;
+        //    int sum = 0;
+        //    foreach (GameStat g1 in list)
+        //    {
+        //        if (g1.PlayerId == g.PlayerId && g1.PlayerShots != -1)
+        //        {
+        //            count++;
+        //            sum += g1.PlayerShots;
+        //            list.Remove(g1);
+        //        }
+        //    }
+        //    playersRanking.Add(g.Player, (double)sum / count);
+        //}
+        //playersRanking.OrderBy(p => p.Value);
+
+        //return playersRanking;
+    }
+            catch (Exception e)
             {
                 return null;
             }
