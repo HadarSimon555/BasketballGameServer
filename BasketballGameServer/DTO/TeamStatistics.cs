@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace BasketballGameServer.DTO
 {
-    public class PlayerStatistics
+    public class TeamStatistics
     {
-        public Player Player { get; set; }
+        public Team Team { get; set; }
         public int Games { get; set; }
         public int TotalScore { get; set; }
-        public PlayerStatistics() { }
+        public TeamStatistics() { }
     }
 }
