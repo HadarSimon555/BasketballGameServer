@@ -699,7 +699,7 @@ namespace BasketballGameServer.Controllers
             try
             {
                 //שליפת כל נתוני המשחקים
-                List<GameStat> list = context.GameStats.Include(g=>g.Player.Team).ToList();
+                List<GameStat> list = context.GameStats.Include(g=>g.Player.Team).Include(g=>g.Player.User).ToList();
                 List<PlayerStatistics> result;
                 //אם הרשימה ריקה 
                 if (list == null)
