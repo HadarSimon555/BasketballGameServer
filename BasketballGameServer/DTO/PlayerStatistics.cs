@@ -14,6 +14,3 @@ namespace BasketballGameServer.DTO
         public PlayerStatistics() { }
     }
 }
-
-
-

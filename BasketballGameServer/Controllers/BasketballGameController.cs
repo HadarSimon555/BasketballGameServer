@@ -44,7 +44,6 @@ namespace BasketballGameServer.Controllers
                 User user = this.context.Login(u.Email, u.Pass);
                 if (user != null)
                 {
-                    // UserDTO userDTO = new UserDTO(user);
                     HttpContext.Session.SetObject("user", user);
                     Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
                     return user;
@@ -52,7 +51,7 @@ namespace BasketballGameServer.Controllers
 
                 else
                 {
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
                     return null;
                 }
             }
@@ -69,24 +68,34 @@ namespace BasketballGameServer.Controllers
         [HttpPost]
         public Player PlayerSignUp([FromBody] Player player)
         {
-            //Check user name and password
-            if (player != null)
+            try
             {
-                bool addPlayer = this.context.AddPlayer(player);
-
-                if (addPlayer)
+                if (player != null)
                 {
-                    HttpContext.Session.SetObject("theUser", player);
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                    return player;
+                    bool addPlayer = this.context.AddPlayer(player);
+
+                    if (addPlayer)
+                    {
+                        HttpContext.Session.SetObject("theUser", player);
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                        return player;
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                        return null;
+                    }
+
                 }
                 else
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                     return null;
+                }
             }
-            else
+            catch (Exception e)
             {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 return null;
             }
         }
@@ -97,46 +106,61 @@ namespace BasketballGameServer.Controllers
         [HttpPost]
         public Coach CoachSignUp([FromBody] Coach coach)
         {
-            //Check user name and password
-            if (coach != null)
+            try
             {
-                bool addCoach = this.context.AddCoach(coach);
-
-                if (addCoach)
+                if (coach != null)
                 {
-                    HttpContext.Session.SetObject("theUser", coach);
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                    return coach;
+                    bool addCoach = this.context.AddCoach(coach);
+
+                    if (addCoach)
+                    {
+                        HttpContext.Session.SetObject("theUser", coach);
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                        return coach;
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                        return null;
+                    }
                 }
                 else
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                     return null;
+                }
             }
-            else
+            catch (Exception e)
             {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 return null;
             }
         }
-        #endregion,
+        #endregion
 
         #region UserExistByEmail
         [Route("UserExistByEmail")]
         [HttpGet]
         public bool UserExistByEmail([FromQuery] string email)
         {
-            bool exist = this.context.UserExistByEmail(email);
-
-            if (exist)
+            try
             {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                bool exist = this.context.UserExistByEmail(email);
 
-                //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                return true;
+                if (exist)
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    return true;
+                }
+                else
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    return false;
+                }
             }
-            else
+            catch (Exception e)
             {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 return false;
             }
         }
@@ -148,7 +172,6 @@ namespace BasketballGameServer.Controllers
         public async Task<IActionResult> UploadImage(IFormFile file)
         {
             User user = HttpContext.Session.GetObject<User>("theUser");
-            //Check if user logged in and its ID is the same as the contact user ID
             if (user != null)
             {
                 if (file == null)
@@ -163,8 +186,6 @@ namespace BasketballGameServer.Controllers
                     {
                         await file.CopyToAsync(stream);
                     }
-
-
                     return Ok(new { length = file.Length, name = file.FileName });
                 }
                 catch (Exception e)
@@ -177,64 +198,66 @@ namespace BasketballGameServer.Controllers
         }
         #endregion
 
-        #region GetGames
-        [Route("GetGames")]
-        [HttpGet]
-        public List<Game> GetGames(int teamId)
-        {
-            bool update = UpdateGamesStatuses();
-            if (update)
-            {
-                if (teamId != -1)
-                    return context.Games.Where(g => (g.HomeTeamId == teamId) || (g.AwayTeamId == teamId)).Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
-                return context.Games.Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
-            }
-            return null;
-        }
-        #endregion
-
         #region UpdateGamesStatuses
         [Route("UpdateGamesStatuses")]
         [HttpPost]
         public bool UpdateGamesStatuses()
         {
-            List<Game> games = context.Games.Include(g => g.GameStatus).ToList();
-            if (games != null)
+            try
             {
-                bool updateGamesStatuses = this.context.UpdateGamesStatuses();
-
-                if (updateGamesStatuses)
+                List<Game> games = context.Games.Include(g => g.GameStatus).ToList();
+                if (games != null)
                 {
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                    return true;
+                    bool updateGamesStatuses = this.context.UpdateGamesStatuses();
+
+                    if (updateGamesStatuses)
+                    {
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                        return true;
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                        return false;
+                    }
                 }
                 else
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                     return false;
+                }
             }
-            else
+            catch (Exception e)
             {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 return false;
             }
         }
         #endregion
 
-        #region GetPlayerOnTeamForSeason
-        //[Route("GetPlayerOnTeamForSeason")]
-        //[HttpGet]
-        //public PlayerOnTeamForSeason GetPlayerOnTeamForSeason([FromQuery] int userId)
-        //{
-        //    try
-        //    {
-        //        Player p = context.Players.FirstOrDefault(x => x.UserId == userId);
-        //        return context.PlayerOnTeamForSeasons.FirstOrDefault(x => x.PlayerId == p.Id);
-        //    }
-        //    catch
-        //    {
-        //        return null;
-        //    }
-        //}
+        #region GetGames
+        [Route("GetGames")]
+        [HttpGet]
+        public List<Game> GetGames(int teamId)
+        {
+            try
+            {
+                bool update = UpdateGamesStatuses();
+                if (update)
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    if (teamId != -1)
+                        return context.Games.Where(g => (g.HomeTeamId == teamId) || (g.AwayTeamId == teamId)).Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
+                    return context.Games.Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+                return null;
+            }
+        }
         #endregion
 
         #region AddTeam
@@ -242,35 +265,36 @@ namespace BasketballGameServer.Controllers
         [HttpPost]
         public Team AddTeam([FromBody] Team team)
         {
-            if (team != null)
+            try
             {
-                bool addTeam = this.context.AddTeam(team);
-
-                if (addTeam)
+                if (team != null)
                 {
-                    HttpContext.Session.SetObject("theUser", team);
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                    return team;
+                    bool addTeam = this.context.AddTeam(team);
+
+                    if (addTeam)
+                    {
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                        return team;
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                        return null;
+                    }
                 }
                 else
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                     return null;
+                }
+
             }
-            else
+            catch (Exception e)
             {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 return null;
             }
         }
-        #endregion
-
-        #region GetLeagues
-        //[Route("GetLeagues")]
-        //[HttpGet]
-        //public List<League> GetLeagues()
-        //{
-        //    return context.Leagues.ToList();
-        //}
         #endregion
 
         #region GetOpenTeams
@@ -288,24 +312,29 @@ namespace BasketballGameServer.Controllers
         [HttpPost]
         public bool AddRequestToJoinTeam([FromBody] RequestToJoinTeam request)
         {
-            //Check user name and password
-            if (request != null)
+            try
             {
-                bool addRequest = this.context.AddRequestToJoinTeam(request);
-
-                if (addRequest)
+                if (request != null)
                 {
-                    HttpContext.Session.SetObject("theUser", request);
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                    return true;
+                    bool addRequest = this.context.AddRequestToJoinTeam(request);
+
+                    if (addRequest)
+                    {
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                        return true;
+                    }
+                    else
+                        return false;
                 }
                 else
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                     return false;
+                }
             }
-            else
+            catch (Exception e)
             {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 return false;
             }
         }
@@ -345,36 +374,45 @@ namespace BasketballGameServer.Controllers
                 return false;
             }
         }
-        #endregion
+        #endregion //לוודא שניתן למחוק
 
         #region ApproveRequestToJoinTeam
         [Route("ApproveRequestToJoinTeam")]
         [HttpPost]
         public bool ApproveRequestToJoinTeam([FromBody] Player player)
         {
-            if (player != null)
+            try
             {
-                RequestToJoinTeam request = player.RequestToJoinTeams.FirstOrDefault();
-                if (request != null)
-                    request.RequestToJoinTeamStatus = context.RequestToJoinTeamStatuses.Where(r => r.Id == 1).FirstOrDefault();
-                bool updatePlayer = this.context.UpdatePlayer(player);
-
-                if (updatePlayer)
+                if (player != null)
                 {
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                    return true;
+                    RequestToJoinTeam request = player.RequestToJoinTeams.FirstOrDefault();
+                    if (request != null)
+                        request.RequestToJoinTeamStatus = context.RequestToJoinTeamStatuses.Where(r => r.Id == 1).FirstOrDefault();
+                    bool updatePlayer = this.context.UpdatePlayer(player);
+
+                    if (updatePlayer)
+                    {
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                        return true;
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                        return false;
+                    }
                 }
                 else
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                     return false;
+                }
             }
-            else
+            catch (Exception e)
             {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 return false;
             }
         }
-
         #endregion
 
         #region DeleteRequestToJoinTeam
@@ -699,7 +737,7 @@ namespace BasketballGameServer.Controllers
             try
             {
                 //שליפת כל נתוני המשחקים
-                List<GameStat> list = context.GameStats.Include(g=>g.Player.Team).Include(g=>g.Player.User).ToList();
+                List<GameStat> list = context.GameStats.Include(g => g.Player.Team).Include(g => g.Player.User).ToList();
                 List<PlayerStatistics> result;
                 //אם הרשימה ריקה 
                 if (list == null)
@@ -714,38 +752,38 @@ namespace BasketballGameServer.Controllers
                 {
                     Player = cl.First().Player,
                     Games = cl.Count(),
-                    TotalScore = cl.Sum(s=>s.PlayerShots)
-                }).ToList<PlayerStatistics>().OrderByDescending(s=>((double)(s.TotalScore))/s.Games).ToList() ;
+                    TotalScore = cl.Sum(s => s.PlayerShots)
+                }).ToList<PlayerStatistics>().OrderByDescending(s => ((double)(s.TotalScore)) / s.Games).ToList();
                 return result;
-    //            Lines
-    //.GroupBy(l => l.ProductCode)
-    //.Select(cl => new ResultLine
-    //{
-    //    ProductName = cl.First().Name,
-    //    Quantity = cl.Count().ToString(),
-    //    Price = cl.Sum(c => c.Price).ToString(),
+                //            Lines
+                //.GroupBy(l => l.ProductCode)
+                //.Select(cl => new ResultLine
+                //{
+                //    ProductName = cl.First().Name,
+                //    Quantity = cl.Count().ToString(),
+                //    Price = cl.Sum(c => c.Price).ToString(),
 
-        //IDictionary<Player, double> playersRanking = new Dictionary<Player, double>();
+                //IDictionary<Player, double> playersRanking = new Dictionary<Player, double>();
 
-        //foreach (GameStat g in list)
-        //{
-        //    int count = 0;
-        //    int sum = 0;
-        //    foreach (GameStat g1 in list)
-        //    {
-        //        if (g1.PlayerId == g.PlayerId && g1.PlayerShots != -1)
-        //        {
-        //            count++;
-        //            sum += g1.PlayerShots;
-        //            list.Remove(g1);
-        //        }
-        //    }
-        //    playersRanking.Add(g.Player, (double)sum / count);
-        //}
-        //playersRanking.OrderBy(p => p.Value);
+                //foreach (GameStat g in list)
+                //{
+                //    int count = 0;
+                //    int sum = 0;
+                //    foreach (GameStat g1 in list)
+                //    {
+                //        if (g1.PlayerId == g.PlayerId && g1.PlayerShots != -1)
+                //        {
+                //            count++;
+                //            sum += g1.PlayerShots;
+                //            list.Remove(g1);
+                //        }
+                //    }
+                //    playersRanking.Add(g.Player, (double)sum / count);
+                //}
+                //playersRanking.OrderBy(p => p.Value);
 
-        //return playersRanking;
-    }
+                //return playersRanking;
+            }
             catch (Exception e)
             {
                 return null;

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using BasketballGameServerBL.Models;
 
-
 namespace BasketballGameServer.DTO
 {
     public class UserDTO

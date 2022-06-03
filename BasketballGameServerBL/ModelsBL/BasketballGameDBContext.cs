@@ -14,7 +14,9 @@ namespace BasketballGameServerBL.Models
         // פעולת התחברות, אם ההתחברות לא הצליחה מחזיר null
         public User Login(string email, string pass)
         {
-            return this.Users.Include(u => u.Players).ThenInclude(t=>t.RequestToJoinTeams).Include(u=>u.Players).ThenInclude(u => u.Team.Coach.User).Include(u => u.Coaches).ThenInclude(u => u.Team.Players).ThenInclude(c => c.RequestToJoinTeams).Where(u => u.Email == email && u.Pass == pass).Include(u => u.Coaches).ThenInclude(u => u.Team.Players).ThenInclude(p=>p.User).FirstOrDefault();
+            return this.Users.Include(u => u.Players).ThenInclude(t=>t.RequestToJoinTeams).Include(u=>u.Players).ThenInclude(u => u.Team.Coach.User).
+                Include(u => u.Coaches).ThenInclude(u => u.Team.Players).ThenInclude(c => c.RequestToJoinTeams).Where(u => u.Email == email && u.Pass == pass).
+                Include(u => u.Coaches).ThenInclude(u => u.Team.Players).ThenInclude(p=>p.User).FirstOrDefault();
         }
         #endregion
 
