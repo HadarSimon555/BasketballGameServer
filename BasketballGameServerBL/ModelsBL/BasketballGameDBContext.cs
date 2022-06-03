@@ -254,25 +254,52 @@ namespace BasketballGameServerBL.Models
                 {
                     // אם התאריך בעבר
                     if (g.Date.Year < DateTime.Today.Year)
+                    {
                         g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
+                        g.GameStatusId = 3;
+                    }
+                        
                     // אם התאריך בעתיד
                     if (g.Date.Year > DateTime.Today.Year)
+                    {
                         g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
+                        g.GameStatusId = 1;
+                    }
+                       
                     // אם התאריך בעבר
                     if (g.Date.Month < DateTime.Today.Month)
+                    {
                         g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
+                        g.GameStatusId = 3;
+                    }
+
                     // אם התאריך בעתיד
                     if (g.Date.Month > DateTime.Today.Month)
+                    {
                         g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
+                        g.GameStatusId = 1;
+                    }
+
                     // אם התאריך בעבר
                     if (g.Date.Day < DateTime.Today.Day)
+                    {
                         g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
+                        g.GameStatusId = 3;
+                    }
+
                     // אם התאריך בעתיד
                     if (g.Date.Day > DateTime.Today.Day)
+                    {
                         g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
+                        g.GameStatusId = 1;
+                    }
+
                     // אם התאריך היום
                     else
+                    { 
                         g.GameStatus = this.GameStatuses.Where(s => s.Id == 2).FirstOrDefault();
+                        g.GameStatusId = 2;
+                    }
                 }
                 this.SaveChanges();
                 return true;
@@ -290,10 +317,23 @@ namespace BasketballGameServerBL.Models
         {
             try
             {
+                int currentGameId = 0;
+                int currentTeamId = 0;
+                int score = listGameStats.Sum(s => s.PlayerShots);
+
                 foreach (GameStat gameStat in listGameStats)
                 {
+                    currentGameId = gameStat.GameId;
+                    currentTeamId = gameStat.Player.Team.Id;
                     this.GameStats.Update(gameStat);
                 }
+
+                Game game = Games.Where(g => g.Id == currentGameId).FirstOrDefault();
+                if (game.HomeTeamId == currentTeamId)
+                    game.ScoreHomeTeam = score;
+                else
+                    game.ScoreAwayTeam = score;
+
                 this.SaveChanges();
                 return true;
             }
