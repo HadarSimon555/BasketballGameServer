@@ -103,7 +103,9 @@ namespace BasketballGameServerBL.Models
         {
             try
             {
-                List<RequestToJoinTeam> list = this.RequestToJoinTeams.Include(r => r.Player).ThenInclude(p => p.User).Include(r => r.Team).ThenInclude(c => c.Coach).Include(r => r.RequestToJoinTeamStatus).Where(c => c.Team.CoachId == coachId && c.RequestToJoinTeamStatus.Id == 3).ToList();
+                List<RequestToJoinTeam> list = this.RequestToJoinTeams.Include(r => r.Player).
+                    ThenInclude(p => p.User).Include(r => r.Team).ThenInclude(c => c.Coach).
+                    Include(r => r.RequestToJoinTeamStatus).Where(c => c.Team.CoachId == coachId && c.RequestToJoinTeamStatus.Id == 3).ToList();
                 return list;
             }
             catch (Exception e)
@@ -137,7 +139,8 @@ namespace BasketballGameServerBL.Models
         public bool HasGame(int teamId, DateTime date)
         {
             Team t = Teams.Where(t => t.Id == teamId).FirstOrDefault();
-            return Games.Any(g => (g.AwayTeam == t || g.HomeTeam == t) && g.Date == date) || RequestGames.Any(r => (r.AwayTeam == t || r.CoachHomeTeam.Team == t) && r.Date == date);
+            return Games.Any(g => (g.AwayTeam == t || g.HomeTeam == t) && g.Date == date) ||
+                RequestGames.Any(r => (r.AwayTeam == t || r.CoachHomeTeam.Team == t) && r.Date == date);
         }
         #endregion
 
@@ -165,7 +168,10 @@ namespace BasketballGameServerBL.Models
         {
             try
             {
-                List<RequestGame> list = this.RequestGames.Where(r => (r.AwayTeam.Id == teamId || r.CoachHomeTeam.TeamId == teamId) && r.RequestGameStatus.Id == 3).Include(r => r.AwayTeam.Coach.User).Include(r => r.CoachHomeTeam.Team.Coach.User).Include(r => r.AwayTeam.Coach.Team.Coach).Include(r => r.RequestGameStatus).Include(r=>r.AwayTeam.Players).Include(r=>r.CoachHomeTeam.Team.Players).ToList();
+                List<RequestGame> list = this.RequestGames.Where(r => (r.AwayTeam.Id == teamId || r.CoachHomeTeam.TeamId == teamId)
+                && r.RequestGameStatus.Id == 3).Include(r => r.AwayTeam.Coach.User).Include(r => r.CoachHomeTeam.Team.Coach.User).
+                Include(r => r.AwayTeam.Coach.Team.Coach).Include(r => r.RequestGameStatus).Include(r=>r.AwayTeam.Players).
+                Include(r=>r.CoachHomeTeam.Team.Players).ToList();
                 return list;
             }
             catch (Exception e)
@@ -205,16 +211,13 @@ namespace BasketballGameServerBL.Models
                 {
                     GameStat g=  new GameStat() { PlayerId = p.Id, Game=game, PlayerShots = -1 };
                     this.Entry(g).State = EntityState.Added;
-                    //this.GameStats.Add(new GameStat() { PlayerId = p.Id, GameId = game.Id, PlayerShots = -1 });
                 }
                 Team homeTeam = game.HomeTeam;
                 foreach (Player p in homeTeam.Players)
                 {
                     GameStat g = new GameStat() { PlayerId = p.Id, Game = game, PlayerShots = -1 };
                     this.Entry(g).State = EntityState.Added;
-                    //this.GameStats.Add(new GameStat() { PlayerId = p.Id, GameId = game.Id, PlayerShots = -1 });
                 }
-                // this.Games.Update(game);
                 this.Entry(game).State = EntityState.Added;
                 this.Entry(awayTeam).State = EntityState.Unchanged;
                 this.Entry(homeTeam).State = EntityState.Unchanged;
@@ -234,7 +237,9 @@ namespace BasketballGameServerBL.Models
         {
             try
             {
-                RequestToJoinTeam request = this.RequestToJoinTeams.Include(r => r.Player).ThenInclude(p => p.User).Include(r => r.Team).ThenInclude(c => c.Coach).Include(r => r.RequestToJoinTeamStatus).Where(p => p.PlayerId == playerId && p.RequestToJoinTeamStatus.Id == 3).FirstOrDefault();
+                RequestToJoinTeam request = this.RequestToJoinTeams.Include(r => r.Player).
+                    ThenInclude(p => p.User).Include(r => r.Team).ThenInclude(c => c.Coach).Include(r => r.RequestToJoinTeamStatus).
+                    Where(p => p.PlayerId == playerId && p.RequestToJoinTeamStatus.Id == 3).FirstOrDefault();
                 return request;
             }
             catch (Exception e)
