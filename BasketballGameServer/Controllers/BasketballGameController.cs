@@ -547,7 +547,6 @@ namespace BasketballGameServer.Controllers
             {
                 List<RequestGame> requests = context.GetRequestsGame(teamId);
                 Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-
                 return requests;
             }
             catch (Exception e)
@@ -732,21 +731,31 @@ namespace BasketballGameServer.Controllers
         [HttpPost]
         public bool SaveGameStats([FromBody] List<GameStat> listGameStats)
         {
-            if (listGameStats != null)
+            try
             {
-                bool saveGameStats = this.context.SaveGameStats(listGameStats);
-                if (saveGameStats)
+                if (listGameStats != null)
                 {
-                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                    //Important! Due to the Lazy Loading, the user will be returned with all of its contects!!
-                    return true;
+                    bool saveGameStats = this.context.SaveGameStats(listGameStats);
+                    if (saveGameStats)
+                    {
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                        return true;
+                    }
+                    else
+                    {
+                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                        return false;
+                    }
                 }
                 else
+                {
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
                     return false;
+                }
             }
-            else
+            catch (Exception e)
             {
-                Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
+                Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                 return false;
             }
         }
@@ -768,7 +777,7 @@ namespace BasketballGameServer.Controllers
 
                 //קבץ את הנתונים לפי מזהה השחקן
                 //עבור כל קבוצה- צור רשומת סטטיסטיקת שחקן שהערכים שלה הם
-                //שחקן   - השחקן של קבוצת הערכים
+                //שחקן - השחקן של קבוצת הערכים
                 //Games- כמות הרשומות בקבוצת הערכים
                 //Sum - סכום לפי קובצת הערכים לפי שדה playershots
                 result = list.GroupBy(p => p.Player.Id).Select(cl => new PlayerStatistics
@@ -778,34 +787,6 @@ namespace BasketballGameServer.Controllers
                     TotalScore = cl.Sum(s => s.PlayerShots)
                 }).ToList<PlayerStatistics>().OrderByDescending(s => ((double)(s.TotalScore)) / s.Games).ToList();
                 return result;
-                //            Lines
-                //.GroupBy(l => l.ProductCode)
-                //.Select(cl => new ResultLine
-                //{
-                //    ProductName = cl.First().Name,
-                //    Quantity = cl.Count().ToString(),
-                //    Price = cl.Sum(c => c.Price).ToString(),
-
-                //IDictionary<Player, double> playersRanking = new Dictionary<Player, double>();
-
-                //foreach (GameStat g in list)
-                //{
-                //    int count = 0;
-                //    int sum = 0;
-                //    foreach (GameStat g1 in list)
-                //    {
-                //        if (g1.PlayerId == g.PlayerId && g1.PlayerShots != -1)
-                //        {
-                //            count++;
-                //            sum += g1.PlayerShots;
-                //            list.Remove(g1);
-                //        }
-                //    }
-                //    playersRanking.Add(g.Player, (double)sum / count);
-                //}
-                //playersRanking.OrderBy(p => p.Value);
-
-                //return playersRanking;
             }
             catch (Exception e)
             {
