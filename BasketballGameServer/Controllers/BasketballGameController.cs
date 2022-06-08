@@ -794,6 +794,40 @@ namespace BasketballGameServer.Controllers
             }
         }
         #endregion
+
+        #region GetTeamsRanking
+        //[Route("GetTeamsRanking")]
+        //[HttpGet]
+        //public List<TeamStatistics> GetTeamsRanking()
+        //{
+        //    try
+        //    {
+        //        //שליפת כל נתוני המשחקים
+        //        List<GameStat> list = context.GameStats.Include(g => g.Player.Team).Include(g => g.Player.User).ToList();
+        //        List<TeamStatistics> result;
+        //        //אם הרשימה ריקה 
+        //        if (list == null)
+        //            return null;
+
+        //        //קבץ את הנתונים לפי מזהה השחקן
+        //        //עבור כל קבוצה- צור רשומת סטטיסטיקת שחקן שהערכים שלה הם
+        //        //שחקן - השחקן של קבוצת הערכים
+        //        //Games- כמות הרשומות בקבוצת הערכים
+        //        //Sum - סכום לפי קובצת הערכים לפי שדה playershots
+        //        result = list.GroupBy(t => t.Player.Team.Id).Select(cl => new TeamStatistics
+        //        {
+        //            Team = cl.First().Player.Team,
+        //            Games = cl.Count(),
+        //            TotalScore = cl.Sum(s => s.PlayerShots)
+        //        }).ToList<PlayerStatistics>().OrderByDescending(s => ((double)(s.TotalScore)) / s.Games).ToList();
+        //        return result;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return null;
+        //    }
+        //}
+        #endregion
     }
 }
 
