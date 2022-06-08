@@ -803,18 +803,12 @@ namespace BasketballGameServer.Controllers
         {
             try
             {
-                //שליפת כל נתוני המשחקים
                 List<GameStat> list = context.GameStats.Include(g => g.Player.Team).ThenInclude(t=>t.GameAwayTeams).Include(g => g.Player.Team).ThenInclude(t=>t.GameHomeTeams).Include(g => g.Player.User).ToList();
                 List<TeamStatistics> result;
                 //אם הרשימה ריקה 
                 if (list == null)
                     return null;
 
-                //קבץ את הנתונים לפי מזהה השחקן
-                //עבור כל קבוצה- צור רשומת סטטיסטיקת שחקן שהערכים שלה הם
-                //שחקן - השחקן של קבוצת הערכים
-                //Games- כמות הרשומות בקבוצת הערכים
-                //Sum - סכום לפי קובצת הערכים לפי שדה playershots
                 result = list.GroupBy(t => t.Player.Team.Id).Select(cl => new TeamStatistics
                 {
                     Team = cl.First().Player.Team,
