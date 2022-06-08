@@ -14,9 +14,9 @@ namespace BasketballGameServerBL.Models
         // פעולת התחברות, אם ההתחברות לא הצליחה מחזיר null
         public User Login(string email, string pass)
         {
-            return this.Users.Include(u => u.Players).ThenInclude(t=>t.RequestToJoinTeams).Include(u=>u.Players).ThenInclude(u => u.Team.Coach.User).
+            return this.Users.Include(u => u.Players).ThenInclude(t => t.RequestToJoinTeams).Include(u => u.Players).ThenInclude(u => u.Team.Coach.User).
                 Include(u => u.Coaches).ThenInclude(u => u.Team.Players).ThenInclude(c => c.RequestToJoinTeams).Where(u => u.Email == email && u.Pass == pass).
-                Include(u => u.Coaches).ThenInclude(u => u.Team.Players).ThenInclude(p=>p.User).FirstOrDefault();
+                Include(u => u.Coaches).ThenInclude(u => u.Team.Players).ThenInclude(p => p.User).FirstOrDefault();
         }
         #endregion
 
@@ -170,8 +170,8 @@ namespace BasketballGameServerBL.Models
             {
                 List<RequestGame> list = this.RequestGames.Where(r => (r.AwayTeam.Id == teamId || r.CoachHomeTeam.TeamId == teamId)
                 && r.RequestGameStatus.Id == 3).Include(r => r.AwayTeam.Coach.User).Include(r => r.CoachHomeTeam.Team.Coach.User).
-                Include(r => r.AwayTeam.Coach.Team.Coach).Include(r => r.RequestGameStatus).Include(r=>r.AwayTeam.Players).
-                Include(r=>r.CoachHomeTeam.Team.Players).ToList();
+                Include(r => r.AwayTeam.Coach.Team.Coach).Include(r => r.RequestGameStatus).Include(r => r.AwayTeam.Players).
+                Include(r => r.CoachHomeTeam.Team.Players).ToList();
                 return list;
             }
             catch (Exception e)
@@ -209,7 +209,7 @@ namespace BasketballGameServerBL.Models
                 Team awayTeam = game.AwayTeam;
                 foreach (Player p in awayTeam.Players)
                 {
-                    GameStat g=  new GameStat() { PlayerId = p.Id, Game=game, PlayerShots = -1 };
+                    GameStat g = new GameStat() { PlayerId = p.Id, Game = game, PlayerShots = -1 };
                     this.Entry(g).State = EntityState.Added;
                 }
                 Team homeTeam = game.HomeTeam;
@@ -259,51 +259,53 @@ namespace BasketballGameServerBL.Models
                 List<Game> games = this.Games.ToList();
                 foreach (Game g in games)
                 {
-                    // אם התאריך בעבר
-                    if (g.Date.Year < DateTime.Today.Year)
+                    if (g.Date.ToShortDateString() != DateTime.Today.ToShortDateString())
                     {
-                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
-                        g.GameStatusId = 3;
-                    }
-                        
-                    // אם התאריך בעתיד
-                    if (g.Date.Year > DateTime.Today.Year)
-                    {
-                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
-                        g.GameStatusId = 1;
-                    }
-                       
-                    // אם התאריך בעבר
-                    if (g.Date.Month < DateTime.Today.Month)
-                    {
-                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
-                        g.GameStatusId = 3;
-                    }
+                        // אם התאריך בעבר
+                        if (g.Date.Year < DateTime.Today.Year)
+                        {
+                            g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
+                            g.GameStatusId = 3;
+                        }
 
-                    // אם התאריך בעתיד
-                    if (g.Date.Month > DateTime.Today.Month)
-                    {
-                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
-                        g.GameStatusId = 1;
-                    }
+                        // אם התאריך בעתיד
+                        if (g.Date.Year > DateTime.Today.Year)
+                        {
+                            g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
+                            g.GameStatusId = 1;
+                        }
 
-                    // אם התאריך בעבר
-                    if (g.Date.Day < DateTime.Today.Day)
-                    {
-                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
-                        g.GameStatusId = 3;
-                    }
+                        // אם התאריך בעבר
+                        if (g.Date.Month < DateTime.Today.Month)
+                        {
+                            g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
+                            g.GameStatusId = 3;
+                        }
 
-                    // אם התאריך בעתיד
-                    if (g.Date.Day > DateTime.Today.Day)
-                    {
-                        g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
-                        g.GameStatusId = 1;
-                    }
+                        // אם התאריך בעתיד
+                        if (g.Date.Month > DateTime.Today.Month)
+                        {
+                            g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
+                            g.GameStatusId = 1;
+                        }
 
+                        // אם התאריך בעבר
+                        if (g.Date.Day < DateTime.Today.Day)
+                        {
+                            g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
+                            g.GameStatusId = 3;
+                        }
+
+                        // אם התאריך בעתיד
+                        if (g.Date.Day > DateTime.Today.Day)
+                        {
+                            g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
+                            g.GameStatusId = 1;
+                        }
+                    }
                     // אם התאריך היום
                     else
-                    { 
+                    {
                         g.GameStatus = this.GameStatuses.Where(s => s.Id == 2).FirstOrDefault();
                         g.GameStatusId = 2;
                     }
