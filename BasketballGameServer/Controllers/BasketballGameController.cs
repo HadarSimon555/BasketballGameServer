@@ -716,7 +716,8 @@ namespace BasketballGameServer.Controllers
         {
             try
             {
-                List<GameStat> list = context.GameStats.Where(x => x.GameId == gameId && x.Player.TeamId == teamId).ToList();
+                List<GameStat> gameStats = context.GameStats.Where(x => x.GameId == gameId).Include(x => x.Player.Team).ToList();
+                List<GameStat> list = gameStats.Where(x => x.Player.TeamId == teamId).ToList();
                 return list;
             }
             catch
