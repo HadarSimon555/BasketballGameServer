@@ -201,36 +201,28 @@ namespace BasketballGameServer.Controllers
         #region UpdateGamesStatuses
         [Route("UpdateGamesStatuses")]
         [HttpPost]
-        public bool UpdateGamesStatuses()
+        public List<Game> UpdateGamesStatuses()
         {
             try
             {
                 List<Game> games = context.Games.Include(g => g.GameStatus).ToList();
                 if (games != null)
                 {
-                    bool updateGamesStatuses = this.context.UpdateGamesStatuses();
+                    List<Game> list = this.context.UpdateGamesStatuses();
 
-                    if (updateGamesStatuses)
-                    {
-                        Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
-                        return true;
-                    }
-                    else
-                    {
-                        Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-                        return false;
-                    }
+                    Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
+                    return list;
                 }
                 else
                 {
                     Response.StatusCode = (int)System.Net.HttpStatusCode.Forbidden;
-                    return false;
+                    return null;
                 }
             }
             catch (Exception e)
             {
                 Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
-                return false;
+                return null;
             }
         }
         #endregion
@@ -242,13 +234,13 @@ namespace BasketballGameServer.Controllers
         {
             try
             {
-                bool update = UpdateGamesStatuses();
-                if (update)
+                List<Game> games = UpdateGamesStatuses();
+                if (games != null)
                 {
                     Response.StatusCode = (int)System.Net.HttpStatusCode.OK;
                     if (teamId != -1)
-                        return context.Games.Where(g => (g.HomeTeamId == teamId) || (g.AwayTeamId == teamId)).Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
-                    return context.Games.Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
+                        return games.Where(g => (g.HomeTeamId == teamId) || (g.AwayTeamId == teamId)).ToList();
+                    return games;
                 }
                 return null;
             }
@@ -803,7 +795,7 @@ namespace BasketballGameServer.Controllers
         {
             try
             {
-                List<GameStat> list = context.GameStats.Include(g => g.Player.Team).ThenInclude(t=>t.GameAwayTeams).Include(g => g.Player.Team).ThenInclude(t=>t.GameHomeTeams).Include(g => g.Player.User).ToList();
+                List<GameStat> list = context.GameStats.Include(g => g.Player.Team).ThenInclude(t => t.GameAwayTeams).Include(g => g.Player.Team).ThenInclude(t => t.GameHomeTeams).Include(g => g.Player.User).ToList();
                 List<TeamStatistics> result;
                 //אם הרשימה ריקה 
                 if (list == null)
@@ -812,7 +804,7 @@ namespace BasketballGameServer.Controllers
                 result = list.GroupBy(t => t.Player.Team.Id).Select(cl => new TeamStatistics
                 {
                     Team = cl.First().Player.Team,
-                    Games =cl.First().Player.Team.GameAwayTeams.Count()+ cl.First().Player.Team.GameHomeTeams.Count(),
+                    Games = cl.First().Player.Team.GameAwayTeams.Count() + cl.First().Player.Team.GameHomeTeams.Count(),
                     TotalScore = cl.Sum(s => s.PlayerShots)
                 }).ToList<TeamStatistics>().OrderByDescending(s => ((double)(s.TotalScore)) / s.Games).ToList();
                 return result;

@@ -251,12 +251,12 @@ namespace BasketballGameServerBL.Models
         #endregion
 
         #region UpdateGamesStatuses
-        public bool UpdateGamesStatuses()
+        public List<Game> UpdateGamesStatuses()
         {
             try
             {
                 // לעדכן את הסטטוסים לפי תאריך
-                List<Game> games = this.Games.ToList();
+                List<Game> games = this.Games.Include(g => g.AwayTeam).Include(g => g.HomeTeam).ToList();
                 foreach (Game g in games)
                 {
                     if (g.Date.ToShortDateString() != DateTime.Today.ToShortDateString())
@@ -311,12 +311,12 @@ namespace BasketballGameServerBL.Models
                     }
                 }
                 this.SaveChanges();
-                return true;
+                return games;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                return false;
+                return null;
             }
         }
         #endregion

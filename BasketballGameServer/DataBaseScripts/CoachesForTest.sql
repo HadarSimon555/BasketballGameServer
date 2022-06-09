@@ -34,7 +34,7 @@ INSERT INTO [dbo].[Team]
            ,[name])
      VALUES
            ('1'
-           ,'Maccabi Tel Aviv')
+           ,'הפועל חולון')
 GO
 
 USE [BasketballGameDB]
@@ -81,7 +81,7 @@ INSERT INTO [dbo].[Team]
            ,[name])
      VALUES
            ('2'
-           ,'Hapoel Kfar Saba')
+           ,'מכבי תל אביב')
 GO
 
 USE [BasketballGameDB]
