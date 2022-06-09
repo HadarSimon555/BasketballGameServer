@@ -334,14 +334,22 @@ namespace BasketballGameServerBL.Models
                 {
                     currentGameId = gameStat.GameId;
                     currentTeamId = gameStat.Player.Team.Id;
-                    this.GameStats.Update(gameStat);
+                    this.Entry(gameStat).State = EntityState.Modified;
                 }
 
                 Game game = Games.Where(g => g.Id == currentGameId).FirstOrDefault();
                 if (game.HomeTeamId == currentTeamId)
+                {
                     game.ScoreHomeTeam = score;
+                    this.Entry(game).State = EntityState.Modified;
+                }
+                    
                 else
+                {
                     game.ScoreAwayTeam = score;
+                    this.Entry(game).State = EntityState.Modified;
+                }
+                    
 
                 this.SaveChanges();
                 return true;
