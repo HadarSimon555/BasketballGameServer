@@ -804,7 +804,7 @@ namespace BasketballGameServer.Controllers
                 result = list.GroupBy(t => t.Player.Team.Id).Select(cl => new TeamStatistics
                 {
                     Team = cl.First().Player.Team,
-                    Games = cl.First().Player.Team.GameAwayTeams.Count() + cl.First().Player.Team.GameHomeTeams.Count(),
+                    Games = cl.First().Player.Team.GameAwayTeams.Where(g=>g.ScoreAwayTeam!=-1).Count() + cl.First().Player.Team.GameHomeTeams.Where(g=>g.ScoreHomeTeam!=-1).Count(),
                     TotalScore = cl.Sum(s => s.PlayerShots)
                 }).ToList<TeamStatistics>().OrderByDescending(s => ((double)(s.TotalScore)) / s.Games).ToList();
                 return result;
