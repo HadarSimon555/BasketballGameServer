@@ -708,7 +708,7 @@ namespace BasketballGameServer.Controllers
         {
             try
             {
-                List<GameStat> gameStats = context.GameStats.Where(x => x.GameId == gameId).Include(x => x.Player.Team).ToList();
+                List<GameStat> gameStats = context.GameStats.Where(x => x.GameId == gameId).Include(x => x.Player.Team).Include(x => x.Player.User).ToList();
                 List<GameStat> list = gameStats.Where(x => x.Player.TeamId == teamId).ToList();
                 return list;
             }
@@ -762,7 +762,7 @@ namespace BasketballGameServer.Controllers
             try
             {
                 //שליפת כל נתוני המשחקים
-                List<GameStat> list = context.GameStats.Include(g => g.Player.Team).Include(g => g.Player.User).ToList();
+                List<GameStat> list = context.GameStats.Where(g => g.PlayerShots != -1).Include(g => g.Player.Team).Include(g => g.Player.User).ToList();
                 List<PlayerStatistics> result;
                 //אם הרשימה ריקה 
                 if (list == null)
@@ -795,7 +795,7 @@ namespace BasketballGameServer.Controllers
         {
             try
             {
-                List<GameStat> list = context.GameStats.Include(g => g.Player.Team).ThenInclude(t => t.GameAwayTeams).Include(g => g.Player.Team).ThenInclude(t => t.GameHomeTeams).Include(g => g.Player.User).ToList();
+                List<GameStat> list = context.GameStats.Where(g => g.PlayerShots != -1).Include(g => g.Player.Team).ThenInclude(t => t.GameAwayTeams).Include(g => g.Player.Team).ThenInclude(t => t.GameHomeTeams).Include(g => g.Player.User).ToList();
                 List<TeamStatistics> result;
                 //אם הרשימה ריקה 
                 if (list == null)
