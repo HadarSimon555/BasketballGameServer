@@ -446,6 +446,91 @@ INSERT INTO [dbo].[Player]
            ,'7')
 GO
 
+-- שחקן 15
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[User]
+           ([email]
+           ,[pass]
+           ,[birthDate]
+           ,[gender]
+           ,[name])
+     VALUES
+           ('levi@gmail.com'
+           ,'123456'
+           ,'07/06/1976'
+           ,'זכר'
+           ,'לוי קורקוס')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[Player]
+           ([height]
+           ,[userId])
+     VALUES
+           ('1.85'
+           ,'22')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[RequestToJoinTeam]
+           ([playerId]
+           ,[teamId]
+           ,[requestToJoinTeamStatusId])
+     VALUES
+           ('15'
+           ,'1'
+           ,'3')
+GO
+
+-- שחקן 16
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[User]
+           ([email]
+           ,[pass]
+           ,[birthDate]
+           ,[gender]
+           ,[name])
+     VALUES
+           ('avi@gmail.com'
+           ,'123456'
+           ,'01/19/1972'
+           ,'זכר'
+           ,'אבי לוי')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[Player]
+           ([height]
+           ,[userId])
+     VALUES
+           ('1.7'
+           ,'23')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[RequestToJoinTeam]
+           ([playerId]
+           ,[teamId]
+           ,[requestToJoinTeamStatusId])
+     VALUES
+           ('16'
+           ,'1'
+           ,'3')
+GO
 
 
 

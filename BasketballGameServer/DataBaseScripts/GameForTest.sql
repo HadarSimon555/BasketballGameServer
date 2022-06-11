@@ -537,3 +537,695 @@ INSERT INTO [dbo].[GameStats]
            ,'2')
 GO
 
+-- משחק 8
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[Game]
+           ([homeTeamId]
+           ,[awayTeamId]
+           ,[gameStatusId]
+           ,[scoreAwayTeam]
+           ,[scoreHomeTeam]
+           ,[date]
+           ,[time]
+           ,[position])
+     VALUES
+           ('1'
+           ,'3'
+           ,'2'
+           ,'-1'
+           ,'-1'
+           ,'06/11/2022'
+           ,'05:00:00'
+           ,'חולון')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('8'
+           ,'-1'
+           ,'1')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('8'
+           ,'-1'
+           ,'2')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('8'
+           ,'-1'
+           ,'5')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('8'
+           ,'-1'
+           ,'6')
+GO
+
+-- משחק 9
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[Game]
+           ([homeTeamId]
+           ,[awayTeamId]
+           ,[gameStatusId]
+           ,[scoreAwayTeam]
+           ,[scoreHomeTeam]
+           ,[date]
+           ,[time]
+           ,[position])
+     VALUES
+           ('2'
+           ,'4'
+           ,'2'
+           ,'-1'
+           ,'-1'
+           ,'06/11/2022'
+           ,'06:10:00'
+           ,'תל אביב')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('9'
+           ,'-1'
+           ,'3')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('9'
+           ,'-1'
+           ,'4')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('9'
+           ,'-1'
+           ,'7')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('9'
+           ,'-1'
+           ,'8')
+GO
+
+-- משחק 10
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[Game]
+           ([homeTeamId]
+           ,[awayTeamId]
+           ,[gameStatusId]
+           ,[scoreAwayTeam]
+           ,[scoreHomeTeam]
+           ,[date]
+           ,[time]
+           ,[position])
+     VALUES
+           ('3'
+           ,'5'
+           ,'2'
+           ,'-1'
+           ,'-1'
+           ,'06/11/2022'
+           ,'07:20:00'
+           ,'כפר סבא')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('10'
+           ,'-1'
+           ,'5')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('10'
+           ,'-1'
+           ,'6')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('10'
+           ,'-1'
+           ,'9')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('10'
+           ,'-1'
+           ,'10')
+GO
+
+-- משחק 11
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[Game]
+           ([homeTeamId]
+           ,[awayTeamId]
+           ,[gameStatusId]
+           ,[scoreAwayTeam]
+           ,[scoreHomeTeam]
+           ,[date]
+           ,[time]
+           ,[position])
+     VALUES
+           ('4'
+           ,'6'
+           ,'1'
+           ,'-1'
+           ,'-1'
+           ,'06/17/2022'
+           ,'08:30:00'
+           ,'חיפה')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('11'
+           ,'-1'
+           ,'7')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('11'
+           ,'-1'
+           ,'8')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('11'
+           ,'-1'
+           ,'11')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('11'
+           ,'-1'
+           ,'12')
+GO
+
+-- משחק 12
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[Game]
+           ([homeTeamId]
+           ,[awayTeamId]
+           ,[gameStatusId]
+           ,[scoreAwayTeam]
+           ,[scoreHomeTeam]
+           ,[date]
+           ,[time]
+           ,[position])
+     VALUES
+           ('5'
+           ,'7'
+           ,'1'
+           ,'-1'
+           ,'-1'
+           ,'06/18/2022'
+           ,'09:40:00'
+           ,'אילת')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('12'
+           ,'-1'
+           ,'9')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('12'
+           ,'-1'
+           ,'10')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('12'
+           ,'-1'
+           ,'13')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('12'
+           ,'-1'
+           ,'14')
+GO
+
+-- משחק 13
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[Game]
+           ([homeTeamId]
+           ,[awayTeamId]
+           ,[gameStatusId]
+           ,[scoreAwayTeam]
+           ,[scoreHomeTeam]
+           ,[date]
+           ,[time]
+           ,[position])
+     VALUES
+           ('6'
+           ,'1'
+           ,'1'
+           ,'-1'
+           ,'-1'
+           ,'06/19/2022'
+           ,'10:50:00'
+           ,'תל אביב')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('13'
+           ,'-1'
+           ,'11')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('13'
+           ,'-1'
+           ,'12')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('13'
+           ,'-1'
+           ,'1')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('13'
+           ,'-1'
+           ,'2')
+GO
+
+-- משחק 14
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[Game]
+           ([homeTeamId]
+           ,[awayTeamId]
+           ,[gameStatusId]
+           ,[scoreAwayTeam]
+           ,[scoreHomeTeam]
+           ,[date]
+           ,[time]
+           ,[position])
+     VALUES
+           ('7'
+           ,'2'
+           ,'1'
+           ,'-1'
+           ,'-1'
+           ,'06/20/2022'
+           ,'11:00:00'
+           ,'באר שבע')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('14'
+           ,'-1'
+           ,'13')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('14'
+           ,'-1'
+           ,'14')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('14'
+           ,'-1'
+           ,'3')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('14'
+           ,'-1'
+           ,'4')
+GO
+
+-- משחק 15
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[Game]
+           ([homeTeamId]
+           ,[awayTeamId]
+           ,[gameStatusId]
+           ,[scoreAwayTeam]
+           ,[scoreHomeTeam]
+           ,[date]
+           ,[time]
+           ,[position])
+     VALUES
+           ('1'
+           ,'4'
+           ,'3'
+           ,'-1'
+           ,'-1'
+           ,'06/08/2022'
+           ,'05:00:00'
+           ,'חולון')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('15'
+           ,'-1'
+           ,'1')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('15'
+           ,'-1'
+           ,'2')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('15'
+           ,'-1'
+           ,'7')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('15'
+           ,'-1'
+           ,'8')
+GO
+
+-- משחק 15
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[Game]
+           ([homeTeamId]
+           ,[awayTeamId]
+           ,[gameStatusId]
+           ,[scoreAwayTeam]
+           ,[scoreHomeTeam]
+           ,[date]
+           ,[time]
+           ,[position])
+     VALUES
+           ('1'
+           ,'5'
+           ,'3'
+           ,'-1'
+           ,'-1'
+           ,'06/09/2022'
+           ,'06:00:00'
+           ,'אילת')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('16'
+           ,'-1'
+           ,'1')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('16'
+           ,'-1'
+           ,'2')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('16'
+           ,'-1'
+           ,'9')
+GO
+
+USE [BasketballGameDB]
+GO
+
+INSERT INTO [dbo].[GameStats]
+           ([gameId]
+           ,[playerShots]
+           ,[playerId])
+     VALUES
+           ('16'
+           ,'-1'
+           ,'10')
+GO
