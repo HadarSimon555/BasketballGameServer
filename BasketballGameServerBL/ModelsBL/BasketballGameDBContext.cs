@@ -150,7 +150,7 @@ namespace BasketballGameServerBL.Models
             try
             {
                 request.RequestGameStatus = this.RequestGameStatuses.Where(r => r.Id == 3).FirstOrDefault();
-                this.RequestGames.Update(request);
+                this.Entry(request).State = EntityState.Added;
 
                 this.SaveChanges();
                 return true;

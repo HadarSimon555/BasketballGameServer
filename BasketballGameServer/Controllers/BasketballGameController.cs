@@ -461,7 +461,7 @@ namespace BasketballGameServer.Controllers
         [HttpGet]
         public List<Team> GetTeams()
         {
-            List<Team> teams = context.Teams.Include(t => t.Coach).Where(t => t.Players.Count() >= 2).ToList();
+            List<Team> teams = context.Teams.Include(t => t.Coach).Include(t => t.Players).Where(t => t.Players.Count() >= 2).ToList();
             return teams;
         }
         #endregion
