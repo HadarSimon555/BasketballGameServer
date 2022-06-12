@@ -269,35 +269,35 @@ namespace BasketballGameServerBL.Models
                         }
 
                         // אם התאריך בעתיד
-                        if (g.Date.Year > DateTime.Today.Year)
+                        else if (g.Date.Year > DateTime.Today.Year)
                         {
                             g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
                             g.GameStatusId = 1;
                         }
 
                         // אם התאריך בעבר
-                        if (g.Date.Month < DateTime.Today.Month)
+                        else if (g.Date.Month < DateTime.Today.Month)
                         {
                             g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
                             g.GameStatusId = 3;
                         }
 
                         // אם התאריך בעתיד
-                        if (g.Date.Month > DateTime.Today.Month)
+                        else if (g.Date.Month > DateTime.Today.Month)
                         {
                             g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
                             g.GameStatusId = 1;
                         }
 
                         // אם התאריך בעבר
-                        if (g.Date.Day < DateTime.Today.Day)
+                        else if (g.Date.Day < DateTime.Today.Day)
                         {
                             g.GameStatus = this.GameStatuses.Where(s => s.Id == 3).FirstOrDefault();
                             g.GameStatusId = 3;
                         }
 
                         // אם התאריך בעתיד
-                        if (g.Date.Day > DateTime.Today.Day)
+                        else if (g.Date.Day > DateTime.Today.Day)
                         {
                             g.GameStatus = this.GameStatuses.Where(s => s.Id == 1).FirstOrDefault();
                             g.GameStatusId = 1;
