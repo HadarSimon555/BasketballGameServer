@@ -34,7 +34,7 @@ INSERT INTO [dbo].[Team]
            ,[name])
      VALUES
            ('1'
-           ,'הפועל חולון')
+           ,'השועלים')
 GO
 
 USE [BasketballGameDB]
@@ -81,7 +81,7 @@ INSERT INTO [dbo].[Team]
            ,[name])
      VALUES
            ('2'
-           ,'מכבי תל אביב')
+           ,'האריות')
 GO
 
 USE [BasketballGameDB]
@@ -128,7 +128,7 @@ INSERT INTO [dbo].[Team]
            ,[name])
      VALUES
            ('3'
-           ,'הפועל כפר סבא')
+           ,'הכרישים')
 GO
 
 USE [BasketballGameDB]
@@ -175,7 +175,7 @@ INSERT INTO [dbo].[Team]
            ,[name])
      VALUES
            ('4'
-           ,'מכבי חיפה')
+           ,'המנצחים')
 GO
 
 USE [BasketballGameDB]
@@ -222,7 +222,7 @@ INSERT INTO [dbo].[Team]
            ,[name])
      VALUES
            ('5'
-           ,'הפועל אילת')
+           ,'השווים')
 GO
 
 USE [BasketballGameDB]
@@ -269,7 +269,7 @@ INSERT INTO [dbo].[Team]
            ,[name])
      VALUES
            ('6'
-           ,'הפועל תל אביב')
+           ,'הכי טובים')
 GO
 
 USE [BasketballGameDB]
@@ -316,7 +316,7 @@ INSERT INTO [dbo].[Team]
            ,[name])
      VALUES
            ('7'
-           ,'הפועל באר שבע')
+           ,'התותחים')
 GO
 
 USE [BasketballGameDB]
